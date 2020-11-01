@@ -1,9 +1,8 @@
 package com.baichong;
 
-import com.baichong.controller.request.BiologyCatalogueRequest;
+import com.baichong.controller.request.CreateBiologyCatalogueRequest;
 import com.baichong.model.BiologyCatalogueModel;
 import com.baichong.service.BiologyCatalogueService;
-import com.baichong.service.LabelService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -21,7 +20,7 @@ public class BiologyCatalogueTests {
 
     @Test
     public void createTest() {
-        BiologyCatalogueRequest request = new BiologyCatalogueRequest();
+        CreateBiologyCatalogueRequest request = new CreateBiologyCatalogueRequest();
         request.setTitle("哈士奇");
         request.setImg("https://i5.hoopchina.com.cn/live_android_1589530560659.jpg");
         request.setContent("1111111111111111111111111");

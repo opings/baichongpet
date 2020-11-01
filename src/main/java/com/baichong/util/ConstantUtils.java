@@ -6,6 +6,7 @@ package com.baichong.util;
  */
 public class ConstantUtils {
 
+
     public static final int ZERO = 0;
 
     public static final int ONE = 1;
@@ -18,6 +19,9 @@ public class ConstantUtils {
     public static final int NUM_3 = 3;
     public static final int NUM_12 = 12;
     public static final int NUM_30 = 30;
+
+    public static final String Y = "Y";
+    public static final String N = "N";
 
 
     public static String COMMA = ",";

@@ -18,8 +18,8 @@ public interface ArticleMapper {
     ArticleDO selectByArticleId(@Param("articleId") String articleId);
 
     List<ArticleDO> listByCategory(@Param("category") String category,
-                                     @Param("startIndex") int startIndex,
-                                     @Param("pageSize") int pageSize);
+                                   @Param("startIndex") int startIndex,
+                                   @Param("pageSize") int pageSize);
 
 
 }

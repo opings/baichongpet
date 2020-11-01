@@ -3,6 +3,8 @@ package com.baichong.model;
 import lombok.Data;
 
 /**
+ * 标签
+ *
  * @author zhaoyongzhen
  * @since 2020/10/25 12:18
  */

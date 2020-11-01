@@ -1,6 +1,6 @@
 package com.baichong.service;
 
-import com.baichong.controller.request.BiologyCatalogueRequest;
+import com.baichong.controller.request.CreateBiologyCatalogueRequest;
 import com.baichong.dao.entity.BiologyCatalogueDO;
 import com.baichong.dao.mapper.BiologyCatalogueMapper;
 import com.baichong.model.BiologyCatalogueModel;
@@ -8,6 +8,9 @@ import com.baichong.service.helper.BiologyCatalogueHelper;
 import com.baichong.util.IDUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author zhaoyongzhen
@@ -21,7 +24,7 @@ public class BiologyCatalogueService {
     @Autowired
     private BiologyCatalogueHelper biologyCatalogueHelper;
 
-    public void create(BiologyCatalogueRequest request) {
+    public void create(CreateBiologyCatalogueRequest request) {
         BiologyCatalogueDO biologyCatalogueDO = new BiologyCatalogueDO();
         biologyCatalogueDO.setBiologyCatalogueId(IDUtils.getId());
         biologyCatalogueDO.setTitle(request.getTitle());
@@ -53,6 +56,13 @@ public class BiologyCatalogueService {
         return biologyCatalogueHelper.buildBiologyCatalogueModel(
                 biologyCatalogueMapper.selectByBiologyCatalogueId(biologyCatalogueId)
         );
+    }
+
+    public List<BiologyCatalogueModel> listBiologyCatalogue(int startIndex, int pageSize) {
+        return biologyCatalogueMapper.listBiologyCatalogue(startIndex, pageSize)
+                .stream()
+                .map(item -> biologyCatalogueHelper.buildBiologyCatalogueModel(item))
+                .collect(Collectors.toList());
     }
 
 

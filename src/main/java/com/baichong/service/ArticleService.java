@@ -3,13 +3,12 @@ package com.baichong.service;
 import com.baichong.dao.entity.ArticleDO;
 import com.baichong.dao.entity.LabelDO;
 import com.baichong.dao.entity.LabelRelationDO;
+import com.baichong.dao.mapper.ArticleMapper;
 import com.baichong.dao.mapper.LabelMapper;
 import com.baichong.dao.mapper.LabelRelationMapper;
-import com.baichong.dao.mapper.ArticleMapper;
 import com.baichong.model.ArticleModel;
 import com.baichong.model.enums.LabelTargetTypeEnum;
 import com.baichong.service.helper.ArticleHelper;
-import com.baichong.util.ConstantUtils;
 import com.baichong.util.DateUtils;
 import com.baichong.util.IDUtils;
 import com.baichong.util.SplitterUtils;
@@ -72,6 +71,11 @@ public class ArticleService {
         return articleDOS.stream()
                 .map(item -> articleHelper.buildArticleModel(item))
                 .collect(Collectors.toList());
+    }
+
+
+    public ArticleModel selectByArticleId(String articleId) {
+        return articleHelper.buildArticleModel(articleMapper.selectByArticleId(articleId));
     }
 
 }

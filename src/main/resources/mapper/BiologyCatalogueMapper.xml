@@ -123,14 +123,13 @@
         WHERE biology_catalogue_id = #{biologyCatalogueId,jdbcType=VARCHAR}
     </select>
 
-    <!--<select id="listByCategory" resultMap="BaseResultMap">-->
-    <!--SELECT-->
-    <!--<include refid="BASE_COLUMN"/>-->
-    <!--FROM-->
-    <!--<include refid="BASE_TABLE"/>-->
-    <!--WHERE category = #{category,jdbcType=VARCHAR}-->
-    <!--LIMIT #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}-->
-    <!--</select>-->
+    <select id="listBiologyCatalogue" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        LIMIT #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
 
 
 </mapper>

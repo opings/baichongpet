@@ -14,30 +14,14 @@ public enum EncyclopediasCategoryEnum {
      * 动物
      */
 
-    animal("RECOMMEND", "推荐"),
+    ANIMAL("ANIMAL", "动物"),
 
 
     /**
      * 植物
      */
 
-    botany("RECOMMEND", "推荐"),
-
-
-    /**
-     * 推荐
-     */
-
-    microorganism("RECOMMEND", "推荐"),
-
-
-    /**
-     * 推荐
-     */
-
-    RECOMMEND("RECOMMEND", "推荐"),
-
-;
+    BOTANY("BOTANY", "植物"),;
 
     @Getter
     private String code;

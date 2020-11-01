@@ -21,10 +21,10 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-    @ResponseBody
+//    @ResponseBody
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public String hello(){
-        return "hello";
+        return "ftl/index";
     }
 
 
