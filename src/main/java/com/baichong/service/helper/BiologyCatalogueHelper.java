@@ -21,6 +21,7 @@ public class BiologyCatalogueHelper {
         BiologyCatalogueModel biologyCatalogueModel = new BiologyCatalogueModel();
         biologyCatalogueModel.setBiologyCatalogueId(biologyCatalogueDO.getBiologyCatalogueId());
         biologyCatalogueModel.setTitle(biologyCatalogueDO.getTitle());
+        biologyCatalogueModel.setIntroduction(biologyCatalogueDO.getIntroduction());
         biologyCatalogueModel.setImg(biologyCatalogueDO.getImg());
         biologyCatalogueModel.setContent(biologyCatalogueDO.getContent());
         biologyCatalogueModel.setCategory(biologyCatalogueDO.getCategory());

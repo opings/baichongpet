@@ -2,14 +2,21 @@ package com.baichong.service;
 
 import com.baichong.controller.request.CreateBiologyCatalogueRequest;
 import com.baichong.dao.entity.BiologyCatalogueDO;
+import com.baichong.dao.entity.LabelDO;
+import com.baichong.dao.entity.LabelRelationDO;
 import com.baichong.dao.mapper.BiologyCatalogueMapper;
+import com.baichong.dao.mapper.LabelMapper;
+import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.BiologyCatalogueModel;
+import com.baichong.model.enums.LabelTargetTypeEnum;
 import com.baichong.service.helper.BiologyCatalogueHelper;
 import com.baichong.util.IDUtils;
+import com.baichong.util.SplitterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -23,11 +30,16 @@ public class BiologyCatalogueService {
     private BiologyCatalogueMapper biologyCatalogueMapper;
     @Autowired
     private BiologyCatalogueHelper biologyCatalogueHelper;
+    @Autowired
+    private LabelMapper labelMapper;
+    @Autowired
+    private LabelRelationMapper labelRelationMapper;
 
     public void create(CreateBiologyCatalogueRequest request) {
         BiologyCatalogueDO biologyCatalogueDO = new BiologyCatalogueDO();
         biologyCatalogueDO.setBiologyCatalogueId(IDUtils.getId());
         biologyCatalogueDO.setTitle(request.getTitle());
+        biologyCatalogueDO.setIntroduction(request.getIntroduction());
         biologyCatalogueDO.setImg(request.getImg());
         biologyCatalogueDO.setContent(request.getContent());
         biologyCatalogueDO.setCategory(request.getCategory());
@@ -49,6 +61,20 @@ public class BiologyCatalogueService {
         biologyCatalogueDO.setSpecies(request.getSpecies());
         biologyCatalogueDO.setSubSpecies(request.getSubSpecies());
         biologyCatalogueMapper.insert(biologyCatalogueDO);
+
+        List<String> labelIdList = SplitterUtils.toList(request.getLabelIds());
+        for (String labelIdStr : labelIdList) {
+            LabelDO labelDO = labelMapper.selectById(Long.parseLong(labelIdStr));
+            if (Objects.isNull(labelDO)) {
+                continue;
+            }
+            LabelRelationDO labelRelationDO = new LabelRelationDO();
+            labelRelationDO.setTargetType(LabelTargetTypeEnum.ENCYCLOPEDIAS_TAG.getCode());
+            labelRelationDO.setTargetId(biologyCatalogueDO.getBiologyCatalogueId());
+            labelRelationDO.setLabelId(Long.parseLong(labelIdStr));
+            labelRelationMapper.insert(labelRelationDO);
+        }
+
     }
 
 

@@ -17,9 +17,14 @@ public class CreateBiologyCatalogueRequest {
     @ApiModelProperty(value = "标题", required = true)
     private String title;
     /**
+     * 简介
+     */
+    @ApiModelProperty(value = "简介", required = true)
+    private String introduction;
+    /**
      * 图片
      */
-    @ApiModelProperty(value = "图片", required = true)
+    @ApiModelProperty(value = "图片", required = false)
     private String img;
     /**
      * 正文
@@ -33,6 +38,12 @@ public class CreateBiologyCatalogueRequest {
      */
     @ApiModelProperty(value = "分类", required = false)
     private String category;
+
+    /**
+     * 标签id 逗号隔开
+     */
+    @ApiModelProperty(value = "标签id 逗号隔开", required = true)
+    private String labelIds;
 
     /**************************额外标准信息*******************************/
     /**

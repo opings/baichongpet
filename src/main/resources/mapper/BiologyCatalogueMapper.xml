@@ -5,6 +5,7 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="biology_catalogue_id" jdbcType="VARCHAR" property="BiologyCatalogueId"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
         <result column="img" jdbcType="VARCHAR" property="img"/>
         <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="category" jdbcType="VARCHAR" property="category"/>
@@ -37,6 +38,7 @@
         id,
         biology_catalogue_id,
         title,
+        introduction,
         img,
         content,
         category,
@@ -67,6 +69,7 @@
         (
         biology_catalogue_id,
         title,
+        introduction,
         img,
         content,
         category,
@@ -92,6 +95,7 @@
         (
         #{biologyCatalogueId,   jdbcType=VARCHAR},
         #{title,                jdbcType=VARCHAR},
+        #{introduction,         jdbcType=VARCHAR},
         #{img,                  jdbcType=VARCHAR},
         #{content,              jdbcType=VARCHAR},
         #{category,             jdbcType=VARCHAR},

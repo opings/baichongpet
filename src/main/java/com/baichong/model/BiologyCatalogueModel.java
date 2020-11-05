@@ -23,6 +23,10 @@ public class BiologyCatalogueModel {
      */
     private String title;
     /**
+     * 简介
+     */
+    private String introduction;
+    /**
      * 图片
      */
     private String img;
