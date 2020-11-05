@@ -7,6 +7,7 @@ import com.baichong.model.ArticleModel;
 import com.baichong.model.enums.ArticleCategoryEnum;
 import com.baichong.service.ArticleService;
 import com.baichong.util.ConstantUtils;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,12 +73,15 @@ public class ArticleController {
     @ResponseBody
     @RequestMapping(value = "/ListArticleCategory", method = RequestMethod.GET)
     @ApiOperation(value = "文章分类列表")
-    public SimpleResult<Map<String, String>> ListArticleCategory() {
-        Map<String, String> articleCategoryList = Maps.newHashMap();
+    public SimpleResult<List<Map<String, String>>> ListArticleCategory() {
+        List<Map<String, String>> result = Lists.newArrayList();
         for (ArticleCategoryEnum articleCategoryEnum : ArticleCategoryEnum.values()) {
-            articleCategoryList.put(articleCategoryEnum.getCode(), articleCategoryEnum.getDesc());
+            Map<String, String> articleCategoryList = Maps.newHashMap();
+            articleCategoryList.put("code", articleCategoryEnum.getCode());
+            articleCategoryList.put("desc", articleCategoryEnum.getDesc());
+            result.add(articleCategoryList);
         }
-        return SimpleResult.success(articleCategoryList);
+        return SimpleResult.success(result);
     }
 
 }
