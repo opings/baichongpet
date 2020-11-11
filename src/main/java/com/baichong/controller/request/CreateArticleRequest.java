@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author zhaoyongzhen
@@ -41,6 +42,18 @@ public class CreateArticleRequest implements Serializable {
      */
     @ApiModelProperty(value = "文章类型", required = true)
     private String category;
+
+    /**
+     * 封面图
+     */
+    @ApiModelProperty(value = "封面图", required = false)
+    private String surfacePlot;
+
+    /**
+     * 插图
+     */
+    @ApiModelProperty(value = "插图,多个英文逗号隔开", required = false)
+    private String illustratingPicture;
 
     /**
      * 标签id 逗号隔开

@@ -27,6 +27,8 @@ public class ArticleTests {
                 "content",
                 "author",
                 ArticleCategoryEnum.BAI_CHONG_RE_DIAN.getCode(),
+                "",
+                "",
                 "1,2,3,4");
     }
 

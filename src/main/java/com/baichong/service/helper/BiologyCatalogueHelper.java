@@ -25,6 +25,8 @@ public class BiologyCatalogueHelper {
         biologyCatalogueModel.setImg(biologyCatalogueDO.getImg());
         biologyCatalogueModel.setContent(biologyCatalogueDO.getContent());
         biologyCatalogueModel.setCategory(biologyCatalogueDO.getCategory());
+        biologyCatalogueModel.setUpdateDt(biologyCatalogueDO.getUpdateDt());
+
         biologyCatalogueModel.setChineseName(biologyCatalogueDO.getChineseName());
         biologyCatalogueModel.setAlias(biologyCatalogueDO.getAlias());
         biologyCatalogueModel.setKingdom(biologyCatalogueDO.getKingdom());

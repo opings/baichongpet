@@ -3,6 +3,7 @@ package com.baichong.model;
 import com.baichong.model.enums.EncyclopediasCategoryEnum;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +44,11 @@ public class BiologyCatalogueModel {
      * 百科标签
      */
     private List<LabelModel> labelList;
+
+    /**
+     * 最后更新时间
+     */
+    private Date updateDt;
 
     /**************************额外标准信息*******************************/
     /**

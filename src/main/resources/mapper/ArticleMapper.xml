@@ -10,6 +10,8 @@
         <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate"/>
         <result column="last_update_date" jdbcType="TIMESTAMP" property="lastUpdateDate"/>
         <result column="category" jdbcType="VARCHAR" property="category"/>
+        <result column="surface_plot" jdbcType="VARCHAR" property="surfacePlot"/>
+        <result column="illustrating_picture" jdbcType="VARCHAR" property="illustratingPicture"/>
         <result column="create_dt" jdbcType="TIMESTAMP" property="createDt"/>
         <result column="update_dt" jdbcType="TIMESTAMP" property="updateDt"/>
     </resultMap>
@@ -27,6 +29,8 @@
         publish_date,
         last_update_date,
         category,
+        surface_plot,
+        illustrating_picture,
         create_dt,
         update_dt
     </sql>
@@ -40,7 +44,9 @@
         author,
         publish_date,
         last_update_date,
-        category
+        category,
+        surface_plot,
+        illustrating_picture
         )
         values
         (#{articleId,jdbcType=VARCHAR},
@@ -49,7 +55,9 @@
         #{author,jdbcType=VARCHAR},
         #{publishDate,jdbcType=TIMESTAMP},
         #{lastUpdateDate,jdbcType=TIMESTAMP},
-        #{category,jdbcType=VARCHAR}
+        #{category,jdbcType=VARCHAR},
+        #{surfacePlot,jdbcType=VARCHAR},
+        #{illustratingPicture,jdbcType=VARCHAR}
         )
     </insert>
 

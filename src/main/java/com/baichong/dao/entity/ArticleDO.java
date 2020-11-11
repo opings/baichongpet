@@ -52,6 +52,16 @@ public class ArticleDO {
      */
     private String category;
 
+    /**
+     * 封面图
+     */
+    private String surfacePlot;
+
+    /**
+     * 插图
+     */
+    private String illustratingPicture;
+
     private Date createDt;
 
     private Date updateDt;

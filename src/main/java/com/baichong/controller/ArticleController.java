@@ -14,10 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +25,7 @@ import java.util.Map;
  * @since 2020/10/22 16:40
  */
 @Controller
+@CrossOrigin
 @RequestMapping(value = "/{projectId}/{version}/article")
 @Api(value = "文章接口", tags = {"文章接口"})
 public class ArticleController {
@@ -46,6 +44,8 @@ public class ArticleController {
                 request.getContent(),
                 request.getAuthor(),
                 request.getCategory(),
+                request.getSurfacePlot(),
+                request.getIllustratingPicture(),
                 request.getLabelIds());
         return SimpleResult.success(ConstantUtils.Y);
     }

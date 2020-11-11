@@ -57,4 +57,14 @@ public class ArticleModel {
      */
     private List<LabelModel> labelList;
 
+    /**
+     * 封面图
+     */
+    private String surfacePlot;
+
+    /**
+     * 插图
+     */
+    private List<String> illustratingPicture;
+
 }

@@ -37,7 +37,13 @@ public class ArticleService {
     @Autowired
     private LabelMapper labelMapper;
 
-    public void create(String title, String content, String author, String category, String labelIds) {
+    public void create(String title,
+                       String content,
+                       String author,
+                       String category,
+                       String surfacePlot,
+                       String illustratingPicture,
+                       String labelIds) {
         transactionTemplate.execute(status -> {
             ArticleDO articleDO = new ArticleDO();
             articleDO.setArticleId(IDUtils.getId());
@@ -45,6 +51,8 @@ public class ArticleService {
             articleDO.setContent(content);
             articleDO.setAuthor(author);
             articleDO.setCategory(category);
+            articleDO.setSurfacePlot(surfacePlot);
+            articleDO.setIllustratingPicture(illustratingPicture);
             articleDO.setPublishDate(DateUtils.nowDate());
             articleDO.setLastUpdateDate(DateUtils.nowDate());
             articleMapper.insert(articleDO);

@@ -6,6 +6,7 @@ import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.ArticleModel;
 import com.baichong.model.LabelModel;
 import com.baichong.model.enums.LabelTargetTypeEnum;
+import com.baichong.util.SplitterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +37,8 @@ public class ArticleHelper {
         articleModel.setContent(articleDO.getContent());
         articleModel.setAuthor(articleDO.getAuthor());
         articleModel.setCategory(articleDO.getCategory());
+        articleModel.setSurfacePlot(articleDO.getSurfacePlot());
+        articleModel.setIllustratingPicture(SplitterUtils.toList(articleDO.getIllustratingPicture()));
         articleModel.setPublishDate(articleDO.getPublishDate());
         articleModel.setLastUpdateDate(articleDO.getArticleId());
         {
