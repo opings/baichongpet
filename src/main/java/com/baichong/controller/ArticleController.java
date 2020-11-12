@@ -71,7 +71,7 @@ public class ArticleController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/ListArticleCategory", method = RequestMethod.GET)
+    @RequestMapping(value = "/listArticleCategory", method = RequestMethod.GET)
     @ApiOperation(value = "文章分类列表")
     public SimpleResult<List<Map<String, String>>> ListArticleCategory() {
         List<Map<String, String>> result = Lists.newArrayList();
