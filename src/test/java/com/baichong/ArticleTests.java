@@ -3,6 +3,7 @@ package com.baichong;
 import com.baichong.model.ArticleModel;
 import com.baichong.model.enums.ArticleCategoryEnum;
 import com.baichong.service.ArticleService;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -34,7 +35,7 @@ public class ArticleTests {
 
     @Test
     public void listByCategoryTest () throws JsonProcessingException {
-        List<ArticleModel> result = articleService.listByCategory(
+        IPage<ArticleModel> result = articleService.listByCategory(
                 ArticleCategoryEnum.BAI_CHONG_RE_DIAN.getCode(),
                 0,
                 10);

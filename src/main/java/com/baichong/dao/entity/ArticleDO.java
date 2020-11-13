@@ -1,16 +1,17 @@
 package com.baichong.dao.entity;
 
 import com.baichong.model.enums.ArticleCategoryEnum;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author zhaoyongzhen
  * @since 2020/10/25 11:54
  */
 @Data
+@TableName(value = "article")
 public class ArticleDO {
 
     private Long id;
@@ -65,7 +66,6 @@ public class ArticleDO {
     private Date createDt;
 
     private Date updateDt;
-
 
 
 }

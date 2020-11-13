@@ -35,48 +35,5 @@
         update_dt
     </sql>
 
-    <insert id="insert" parameterType="com.baichong.dao.entity.ArticleDO">
-        INSERT INTO
-        <include refid="BASE_TABLE"/>
-        (article_id,
-        title,
-        content,
-        author,
-        publish_date,
-        last_update_date,
-        category,
-        surface_plot,
-        illustrating_picture
-        )
-        values
-        (#{articleId,jdbcType=VARCHAR},
-        #{title,jdbcType=VARCHAR},
-        #{content,jdbcType=VARCHAR},
-        #{author,jdbcType=VARCHAR},
-        #{publishDate,jdbcType=TIMESTAMP},
-        #{lastUpdateDate,jdbcType=TIMESTAMP},
-        #{category,jdbcType=VARCHAR},
-        #{surfacePlot,jdbcType=VARCHAR},
-        #{illustratingPicture,jdbcType=VARCHAR}
-        )
-    </insert>
-
-    <select id="selectByArticleId" resultMap="BaseResultMap">
-        SELECT
-        <include refid="BASE_COLUMN"/>
-        FROM
-        <include refid="BASE_TABLE"/>
-        WHERE article_id = #{articleId,jdbcType=VARCHAR}
-    </select>
-
-    <select id="listByCategory" resultMap="BaseResultMap">
-        SELECT
-        <include refid="BASE_COLUMN"/>
-        FROM
-        <include refid="BASE_TABLE"/>
-        WHERE category = #{category,jdbcType=VARCHAR}
-        LIMIT #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
-    </select>
-
 
 </mapper>

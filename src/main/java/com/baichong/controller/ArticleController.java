@@ -7,6 +7,7 @@ import com.baichong.model.ArticleModel;
 import com.baichong.model.enums.ArticleCategoryEnum;
 import com.baichong.service.ArticleService;
 import com.baichong.util.ConstantUtils;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import io.swagger.annotations.Api;
@@ -16,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +34,7 @@ public class ArticleController {
     private ArticleService articleService;
 
     @ResponseBody
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping(value = "/create")
     @ApiOperation(value = "创建文章")
     public SimpleResult<String> createArticle(
             @RequestBody
@@ -52,17 +52,17 @@ public class ArticleController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/listArticle", method = RequestMethod.GET)
+    @GetMapping(value = "/listArticle")
     @ApiOperation(value = "文章列表")
-    public SimpleResult<List<ArticleModel>> listArticle(QueryArticleRequest request) {
-        List<ArticleModel> articleModels = articleService.listByCategory(request.getCategory(),
+    public SimpleResult<IPage<ArticleModel>> listArticle(QueryArticleRequest request) {
+        IPage<ArticleModel> articleModels = articleService.listByCategory(request.getCategory(),
                 request.getStartIndex(),
                 request.getPageSize());
         return SimpleResult.success(articleModels);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/selectArticleInfo", method = RequestMethod.GET)
+    @GetMapping(value = "/selectArticleInfo")
     @ApiOperation(value = "文章详情")
     public SimpleResult<ArticleModel> selectArticleInfo(QueryArticleRequest request) {
         ArticleModel articleModel = articleService.selectByArticleId(request.getArticleId());
@@ -71,9 +71,9 @@ public class ArticleController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/listArticleCategory", method = RequestMethod.GET)
+    @GetMapping(value = "/listArticleCategory")
     @ApiOperation(value = "文章分类列表")
-    public SimpleResult<List<Map<String, String>>> ListArticleCategory() {
+    public SimpleResult<List<Map<String, String>>> listArticleCategory() {
         List<Map<String, String>> result = Lists.newArrayList();
         for (ArticleCategoryEnum articleCategoryEnum : ArticleCategoryEnum.values()) {
             Map<String, String> articleCategoryList = Maps.newHashMap();

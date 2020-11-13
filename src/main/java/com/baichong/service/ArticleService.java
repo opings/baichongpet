@@ -12,13 +12,16 @@ import com.baichong.service.helper.ArticleHelper;
 import com.baichong.util.DateUtils;
 import com.baichong.util.IDUtils;
 import com.baichong.util.SplitterUtils;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author zhaoyongzhen
@@ -36,6 +39,13 @@ public class ArticleService {
     private LabelRelationMapper labelRelationMapper;
     @Autowired
     private LabelMapper labelMapper;
+
+    private static ArticleModel apply(ArticleDO article) {
+        ArticleModel v = new ArticleModel();
+        BeanUtils.copyProperties(article, v);
+        return v;
+
+    }
 
     public void create(String title,
                        String content,
@@ -74,16 +84,19 @@ public class ArticleService {
     }
 
 
-    public List<ArticleModel> listByCategory(String category, Integer startIndex, Integer pageSize) {
-        List<ArticleDO> articleDOS = articleMapper.listByCategory(category, startIndex, pageSize);
-        return articleDOS.stream()
-                .map(item -> articleHelper.buildArticleModel(item))
-                .collect(Collectors.toList());
+    public IPage<ArticleModel> listByCategory(String category, Integer startIndex, Integer pageSize) {
+        QueryWrapper<ArticleDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("category", category);
+        Page<ArticleDO> page = new Page<>(startIndex, pageSize);
+        IPage<ArticleDO> articlePage = articleMapper.selectPage(page, queryWrapper);
+        return articlePage.convert(ArticleService::apply);
     }
 
 
     public ArticleModel selectByArticleId(String articleId) {
-        return articleHelper.buildArticleModel(articleMapper.selectByArticleId(articleId));
+        QueryWrapper<ArticleDO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("article_Id", articleId);
+        return articleHelper.buildArticleModel(articleMapper.selectOne(queryWrapper));
     }
 
 }
