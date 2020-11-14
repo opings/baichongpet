@@ -42,7 +42,7 @@ public class ArticleHelper {
         articleModel.setPublishDate(articleDO.getPublishDate());
         articleModel.setLastUpdateDate(articleDO.getArticleId());
         {
-            List<LabelModel> labelList = labelRelationMapper.listByArticleId(
+            List<LabelModel> labelList = labelRelationMapper.listByTargetTypeAndId(
                     LabelTargetTypeEnum.ARTICLE_TAG.getCode(),
                     articleDO.getArticleId(),
                     0,

@@ -1,6 +1,6 @@
 package com.baichong;
 
-import com.baichong.controller.request.CreateBiologyCatalogueRequest;
+import com.baichong.controller.request.biologycatalogue.CreateBiologyCatalogueRequest;
 import com.baichong.model.BiologyCatalogueModel;
 import com.baichong.service.BiologyCatalogueService;
 import com.fasterxml.jackson.core.JsonProcessingException;
