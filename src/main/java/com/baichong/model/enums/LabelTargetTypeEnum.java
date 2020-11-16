@@ -18,7 +18,13 @@ public enum LabelTargetTypeEnum {
     /**
      * 百科标签
      */
-    ENCYCLOPEDIAS_TAG("ENCYCLOPEDIAS_TAG", "百科标签"),;
+    ENCYCLOPEDIAS_TAG("ENCYCLOPEDIAS_TAG", "百科标签"),
+
+    /**
+     * 百科分类
+     */
+    ENCYCLOPEDIAS_CATEGORY("ENCYCLOPEDIAS_CATEGORY", "百科分类"),
+    ;
 
     @Getter
     private String code;

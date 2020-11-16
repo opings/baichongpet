@@ -44,12 +44,7 @@ public enum ArticleCategoryEnum {
     /**
      * 佰宠故事
      */
-    BAI_CHONG_GU_SHI("BAI_CHONG_GU_SHI", "佰宠故事"),
-
-    /**
-     * 宠物集中营
-     */
-    CHONG_WU_JI_ZHONG_YING("CHONG_WU_JI_ZHONG_YING", "宠物集中营"),;
+    BAI_CHONG_GU_SHI("BAI_CHONG_GU_SHI", "佰宠故事"),;
 
     @Getter
     private String code;

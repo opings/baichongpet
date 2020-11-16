@@ -1,5 +1,8 @@
 package com.baichong;
 
+import com.alibaba.excel.EasyExcel;
+import com.baichong.exceldemo.ArticleExcelData;
+import com.baichong.exceldemo.ArticleDataListener;
 import com.baichong.model.ArticleModel;
 import com.baichong.model.enums.ArticleCategoryEnum;
 import com.baichong.service.ArticleService;
@@ -40,6 +43,15 @@ public class ArticleTests {
                 10);
         ObjectMapper mapper=new ObjectMapper();
         System.out.println( mapper.writeValueAsString(result));
+    }
+
+    @Test
+    public void excelBatchLoadData() {
+
+        String fileName = "C:\\Users\\zhaoyongzhen\\Desktop\\zixun.xls";
+        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        EasyExcel.read(fileName, ArticleExcelData.class, new ArticleDataListener(articleService)).sheet().doRead();
+
     }
 
 }

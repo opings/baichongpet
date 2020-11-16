@@ -19,7 +19,8 @@
         update_dt
     </sql>
 
-    <insert id="insert" parameterType="com.baichong.dao.entity.LabelDO">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.baichong.dao.entity.LabelDO">
         INSERT INTO
         <include refid="BASE_TABLE"/>
         (
