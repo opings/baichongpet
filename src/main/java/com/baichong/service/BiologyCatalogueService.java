@@ -1,6 +1,6 @@
 package com.baichong.service;
 
-import com.baichong.controller.request.CreateBiologyCatalogueRequest;
+import com.baichong.controller.request.biologycatalogue.CreateBiologyCatalogueRequest;
 import com.baichong.dao.entity.BiologyCatalogueDO;
 import com.baichong.dao.entity.LabelDO;
 import com.baichong.dao.entity.LabelRelationDO;
@@ -8,6 +8,7 @@ import com.baichong.dao.mapper.BiologyCatalogueMapper;
 import com.baichong.dao.mapper.LabelMapper;
 import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.BiologyCatalogueModel;
+import com.baichong.model.LabelModel;
 import com.baichong.model.enums.LabelTargetTypeEnum;
 import com.baichong.service.helper.BiologyCatalogueHelper;
 import com.baichong.util.IDUtils;
@@ -31,9 +32,9 @@ public class BiologyCatalogueService {
     @Autowired
     private BiologyCatalogueHelper biologyCatalogueHelper;
     @Autowired
-    private LabelMapper labelMapper;
-    @Autowired
     private LabelRelationMapper labelRelationMapper;
+    @Autowired
+    private LabelService labelService;
 
     public void create(CreateBiologyCatalogueRequest request) {
         BiologyCatalogueDO biologyCatalogueDO = new BiologyCatalogueDO();
@@ -64,8 +65,8 @@ public class BiologyCatalogueService {
 
         List<String> labelIdList = SplitterUtils.toList(request.getLabelIds());
         for (String labelIdStr : labelIdList) {
-            LabelDO labelDO = labelMapper.selectById(Long.parseLong(labelIdStr));
-            if (Objects.isNull(labelDO)) {
+            LabelModel labelModel = labelService.selectById(Long.parseLong(labelIdStr));
+            if (Objects.isNull(labelModel)) {
                 continue;
             }
             LabelRelationDO labelRelationDO = new LabelRelationDO();
@@ -91,5 +92,29 @@ public class BiologyCatalogueService {
                 .collect(Collectors.toList());
     }
 
+
+    public LabelModel createCategoryLabel(String category, String labelName) {
+        LabelModel labelModel = labelService.create(labelName);
+
+        LabelRelationDO labelRelationDO = new LabelRelationDO();
+        labelRelationDO.setTargetType(LabelTargetTypeEnum.ENCYCLOPEDIAS_CATEGORY.getCode());
+        labelRelationDO.setTargetId(category);
+        labelRelationDO.setLabelId(labelModel.getId());
+        labelRelationMapper.insert(labelRelationDO);
+
+        return labelModel;
+    }
+
+
+    public List<LabelModel> listCategoryLabel(String category) {
+        return labelRelationMapper.listByTargetTypeAndId(
+                LabelTargetTypeEnum.ENCYCLOPEDIAS_CATEGORY.getCode(),
+                category,
+                0,
+                Integer.MAX_VALUE)
+                .stream()
+                .map(item -> labelService.selectById(item.getLabelId()))
+                .collect(Collectors.toList());
+    }
 
 }

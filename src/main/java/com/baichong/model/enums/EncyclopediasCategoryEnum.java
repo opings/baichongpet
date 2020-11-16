@@ -21,7 +21,24 @@ public enum EncyclopediasCategoryEnum {
      * 植物
      */
 
-    BOTANY("BOTANY", "植物"),;
+    BOTANY("BOTANY", "植物"),
+
+    /**
+     * 真菌
+     */
+    FUNGUS("FUNGUS", "真菌"),
+
+    /**
+     * 病毒
+     */
+    VIRUS("VIRUS", "病毒"),
+
+    /**
+     * 原核生物
+     */
+    PROCARYOTIC_ORGANISM("PROCARYOTIC_ORGANISM", "原核生物"),
+
+    ;
 
     @Getter
     private String code;

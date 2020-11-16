@@ -1,7 +1,7 @@
 package com.baichong.controller;
 
-import com.baichong.controller.request.CreateArticleRequest;
-import com.baichong.controller.request.QueryArticleRequest;
+import com.baichong.controller.request.article.CreateArticleRequest;
+import com.baichong.controller.request.article.QueryArticleRequest;
 import com.baichong.controller.response.SimpleResult;
 import com.baichong.model.ArticleModel;
 import com.baichong.model.enums.ArticleCategoryEnum;

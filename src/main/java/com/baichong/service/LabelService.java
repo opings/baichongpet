@@ -23,10 +23,12 @@ public class LabelService {
     @Autowired
     private LabelHelper labelHelper;
 
-    public void create(String labelName) {
+    public LabelModel create(String labelName) {
         LabelDO labelDO = new LabelDO();
         labelDO.setLabelName(labelName);
         labelMapper.insert(labelDO);
+
+        return labelHelper.buildLabelModel(labelDO);
     }
 
     public List<LabelModel> listLabel(Integer startIndex, Integer pageSize) {
@@ -34,6 +36,11 @@ public class LabelService {
         return labelDOS.stream()
                 .map(item -> labelHelper.buildLabelModel(item))
                 .collect(Collectors.toList());
+    }
+
+
+    public LabelModel selectById(Long labelId) {
+        return labelHelper.buildLabelModel(labelMapper.selectById(labelId));
     }
 
 }

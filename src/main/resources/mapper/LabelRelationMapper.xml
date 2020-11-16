@@ -38,7 +38,7 @@
     </insert>
 
 
-    <select id="listByArticleId" resultMap="BaseResultMap">
+    <select id="listByTargetTypeAndId" resultMap="BaseResultMap">
         SELECT
         <include refid="BASE_COLUMN"/>
         FROM

@@ -1,7 +1,7 @@
 package com.baichong.controller;
 
-import com.baichong.controller.request.CreateLabelRequest;
-import com.baichong.controller.request.QueryLabelRequest;
+import com.baichong.controller.request.label.CreateLabelRequest;
+import com.baichong.controller.request.label.QueryLabelRequest;
 import com.baichong.controller.response.SimpleResult;
 import com.baichong.model.LabelModel;
 import com.baichong.service.LabelService;

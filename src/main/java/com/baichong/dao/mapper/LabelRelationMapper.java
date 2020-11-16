@@ -16,10 +16,10 @@ public interface LabelRelationMapper {
     int insert(LabelRelationDO labelRelationDO);
 
 
-    List<LabelRelationDO> listByArticleId(@Param("targetType") String targetType,
-                                          @Param("targetId") String targetId,
-                                          @Param("startIndex") int startIndex,
-                                          @Param("pageSize") int pageSize);
+    List<LabelRelationDO> listByTargetTypeAndId(@Param("targetType") String targetType,
+                                                @Param("targetId") String targetId,
+                                                @Param("startIndex") int startIndex,
+                                                @Param("pageSize") int pageSize);
 
     List<LabelRelationDO> listByLabelId(@Param("targetType") String targetType,
                                         @Param("labelId") Long labelId,

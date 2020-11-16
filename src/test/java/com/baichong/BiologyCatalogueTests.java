@@ -1,6 +1,9 @@
 package com.baichong;
 
-import com.baichong.controller.request.CreateBiologyCatalogueRequest;
+import com.alibaba.excel.EasyExcel;
+import com.baichong.controller.request.biologycatalogue.CreateBiologyCatalogueRequest;
+import com.baichong.exceldemo.BiologyCatalogueDataListener;
+import com.baichong.exceldemo.BiologyCatalogueExcelData;
 import com.baichong.model.BiologyCatalogueModel;
 import com.baichong.service.BiologyCatalogueService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -51,6 +54,16 @@ public class BiologyCatalogueTests {
         BiologyCatalogueModel biologyCatalogueModel = biologyCatalogueService.selectByBiologyCatalogueId("770689471472467968");
         ObjectMapper objectMapper = new ObjectMapper();
         System.out.println(objectMapper.writeValueAsString(biologyCatalogueModel));
+    }
+
+
+    @Test
+    public void excelBatchLoadData() {
+
+        String fileName = "C:\\Users\\zhaoyongzhen\\Desktop\\100-11-15pet.xls";
+        // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
+        EasyExcel.read(fileName, BiologyCatalogueExcelData.class, new BiologyCatalogueDataListener(biologyCatalogueService)).sheet().doRead();
+
     }
 
 }

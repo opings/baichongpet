@@ -7,6 +7,7 @@ import com.baichong.dao.mapper.ArticleMapper;
 import com.baichong.dao.mapper.LabelMapper;
 import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.ArticleModel;
+import com.baichong.model.LabelModel;
 import com.baichong.model.enums.LabelTargetTypeEnum;
 import com.baichong.service.helper.ArticleHelper;
 import com.baichong.util.DateUtils;
@@ -38,7 +39,8 @@ public class ArticleService {
     @Autowired
     private LabelRelationMapper labelRelationMapper;
     @Autowired
-    private LabelMapper labelMapper;
+    private LabelService labelService;
+
 
     private static ArticleModel apply(ArticleDO article) {
         ArticleModel v = new ArticleModel();
@@ -69,8 +71,8 @@ public class ArticleService {
 
             List<String> labelIdList = SplitterUtils.toList(labelIds);
             for (String labelIdStr : labelIdList) {
-                LabelDO labelDO = labelMapper.selectById(Long.parseLong(labelIdStr));
-                if (Objects.isNull(labelDO)) {
+                LabelModel labelModel = labelService.selectById(Long.parseLong(labelIdStr));
+                if (Objects.isNull(labelModel)) {
                     continue;
                 }
                 LabelRelationDO labelRelationDO = new LabelRelationDO();
