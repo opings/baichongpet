@@ -129,9 +129,22 @@
 
     <select id="listBiologyCatalogue" resultMap="BaseResultMap">
         SELECT
-        <include refid="BASE_COLUMN"/>
+          bc.*
         FROM
-        <include refid="BASE_TABLE"/>
+        biology_catalogue bc
+        LEFT JOIN label_relation lr ON bc.biology_catalogue_id = lr.target_id
+        AND lr.target_type = 'ENCYCLOPEDIAS_TAG'
+        <where>
+            <if test="category != null">
+                and bc.category = #{category, jdbcType=VARCHAR}
+            </if>
+            <if test="labelList != null and labelList.size > 0">
+                and lr.label_id in
+                <foreach collection="labelList" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        </where>
         LIMIT #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
     </select>
 

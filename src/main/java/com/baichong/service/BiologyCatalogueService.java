@@ -85,8 +85,9 @@ public class BiologyCatalogueService {
         );
     }
 
-    public List<BiologyCatalogueModel> listBiologyCatalogue(int startIndex, int pageSize) {
-        return biologyCatalogueMapper.listBiologyCatalogue(startIndex, pageSize)
+    public List<BiologyCatalogueModel> listBiologyCatalogue(String category, String labelIds, int startIndex, int pageSize) {
+        List<String> labelIdList = SplitterUtils.toList(labelIds);
+        return biologyCatalogueMapper.listBiologyCatalogue(category, labelIdList, startIndex, pageSize)
                 .stream()
                 .map(item -> biologyCatalogueHelper.buildBiologyCatalogueModel(item))
                 .collect(Collectors.toList());
