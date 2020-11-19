@@ -6,6 +6,7 @@ import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.ArticleModel;
 import com.baichong.model.LabelModel;
 import com.baichong.model.enums.LabelTargetTypeEnum;
+import com.baichong.service.LabelService;
 import com.baichong.util.SplitterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,11 +22,7 @@ import java.util.stream.Collectors;
 @Component
 public class ArticleHelper {
     @Autowired
-    private LabelRelationMapper labelRelationMapper;
-    @Autowired
-    private LabelMapper labelMapper;
-    @Autowired
-    private LabelHelper labelHelper;
+    private LabelService labelService;
 
     public ArticleModel buildArticleModel(ArticleDO articleDO) {
         if (Objects.isNull(articleDO)) {
@@ -42,17 +39,11 @@ public class ArticleHelper {
         articleModel.setPublishDate(articleDO.getPublishDate());
         articleModel.setLastUpdateDate(articleDO.getArticleId());
         {
-            List<LabelModel> labelList = labelRelationMapper.listByTargetTypeAndId(
-                    LabelTargetTypeEnum.ARTICLE_TAG.getCode(),
+            List<LabelModel> labelList = labelService.listLabelByTargetTypeAndId(
+                    LabelTargetTypeEnum.ARTICLE_TAG,
                     articleDO.getArticleId(),
                     0,
-                    Integer.MAX_VALUE)
-                    .stream()
-                    .map(item -> labelMapper.selectById(item.getLabelId()))
-                    .filter(Objects::nonNull)
-                    .map(item -> labelHelper.buildLabelModel(item))
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toList());
+                    Integer.MAX_VALUE);
             articleModel.setLabelList(labelList);
         }
         return articleModel;

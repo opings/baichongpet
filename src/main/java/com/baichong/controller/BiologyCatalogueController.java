@@ -1,10 +1,6 @@
 package com.baichong.controller;
 
-import com.baichong.controller.request.BasePageRequest;
-import com.baichong.controller.request.biologycatalogue.CreateBiologyCatalogueCategoryLabelRequest;
-import com.baichong.controller.request.biologycatalogue.CreateBiologyCatalogueRequest;
-import com.baichong.controller.request.biologycatalogue.QueryBiologyCatalogueCategoryLabelRequest;
-import com.baichong.controller.request.biologycatalogue.QueryBiologyCatalogueRequest;
+import com.baichong.controller.request.biologycatalogue.*;
 import com.baichong.controller.response.SimpleResult;
 import com.baichong.model.BiologyCatalogueModel;
 import com.baichong.model.LabelModel;
@@ -56,9 +52,12 @@ public class BiologyCatalogueController {
     @ResponseBody
     @RequestMapping(value = "/listBiologyCatalogueInfo", method = RequestMethod.GET)
     @ApiOperation(value = "生物名录列表")
-    public SimpleResult<List<BiologyCatalogueModel>> listBiologyCatalogueInfo(BasePageRequest request) {
-        List<BiologyCatalogueModel> biologyCatalogueModels =
-                biologyCatalogueService.listBiologyCatalogue(request.getStartIndex(), request.getPageSize());
+    public SimpleResult<List<BiologyCatalogueModel>> listBiologyCatalogueInfo(ListQueryBiologyCatalogueRequest request) {
+        List<BiologyCatalogueModel> biologyCatalogueModels = biologyCatalogueService.listBiologyCatalogue(
+                request.getCategory(),
+                request.getLabelIds(),
+                request.getStartIndex(),
+                request.getPageSize());
         return SimpleResult.success(biologyCatalogueModels);
     }
 

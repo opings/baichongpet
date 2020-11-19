@@ -1,10 +1,17 @@
 package com.baichong.service.helper;
 
 import com.baichong.dao.entity.BiologyCatalogueDO;
+import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.BiologyCatalogueModel;
+import com.baichong.model.LabelModel;
+import com.baichong.model.enums.LabelTargetTypeEnum;
+import com.baichong.service.LabelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author zhaoyongzhen
@@ -12,6 +19,9 @@ import java.util.Objects;
  */
 @Component
 public class BiologyCatalogueHelper {
+
+    @Autowired
+    private LabelService labelService;
 
 
     public BiologyCatalogueModel buildBiologyCatalogueModel(BiologyCatalogueDO biologyCatalogueDO) {
@@ -44,6 +54,15 @@ public class BiologyCatalogueHelper {
         biologyCatalogueModel.setSubGenus(biologyCatalogueDO.getSubGenus());
         biologyCatalogueModel.setSpecies(biologyCatalogueDO.getSpecies());
         biologyCatalogueModel.setSubSpecies(biologyCatalogueDO.getSubSpecies());
+
+        {
+            List<LabelModel> labelList = labelService.listLabelByTargetTypeAndId(
+                    LabelTargetTypeEnum.ENCYCLOPEDIAS_TAG,
+                    biologyCatalogueDO.getBiologyCatalogueId(),
+                    0,
+                    Integer.MAX_VALUE);
+            biologyCatalogueModel.setLabelList(labelList);
+        }
 
         return biologyCatalogueModel;
     }

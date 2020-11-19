@@ -17,7 +17,10 @@ public interface BiologyCatalogueMapper {
 
     BiologyCatalogueDO selectByBiologyCatalogueId(@Param("biologyCatalogueId") String biologyCatalogueId);
 
-    List<BiologyCatalogueDO> listBiologyCatalogue(@Param("startIndex") int startIndex,
-                                                  @Param("pageSize") int pageSize);
+    List<BiologyCatalogueDO> listBiologyCatalogue(
+            @Param("category") String category,
+            @Param("labelList") List<String> labelList,
+            @Param("startIndex") int startIndex,
+            @Param("pageSize") int pageSize);
 
 }
