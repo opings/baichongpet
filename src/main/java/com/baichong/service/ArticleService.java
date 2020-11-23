@@ -86,10 +86,10 @@ public class ArticleService {
     }
 
 
-    public IPage<ArticleModel> listByCategory(String category, Integer startIndex, Integer pageSize) {
+    public IPage<ArticleModel> listByCategory(String category, Integer pageNo, Integer pageSize) {
         QueryWrapper<ArticleDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("category", category);
-        Page<ArticleDO> page = new Page<>(startIndex, pageSize);
+        Page<ArticleDO> page = new Page<>(pageNo, pageSize);
         IPage<ArticleDO> articlePage = articleMapper.selectPage(page, queryWrapper);
         return articlePage.convert(ArticleService::apply);
     }

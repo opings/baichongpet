@@ -56,7 +56,7 @@ public class ArticleController {
     @ApiOperation(value = "文章列表")
     public SimpleResult<IPage<ArticleModel>> listArticle(QueryArticleRequest request) {
         IPage<ArticleModel> articleModels = articleService.listByCategory(request.getCategory(),
-                request.getStartIndex(),
+                request.getPageNo(),
                 request.getPageSize());
         return SimpleResult.success(articleModels);
     }
