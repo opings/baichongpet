@@ -15,6 +15,7 @@ import com.baichong.util.IDUtils;
 import com.baichong.util.SplitterUtils;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,10 +88,9 @@ public class ArticleService {
 
 
     public IPage<ArticleModel> listByCategory(String category, Integer pageNo, Integer pageSize) {
-        QueryWrapper<ArticleDO> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("category", category);
+        QueryWrapper<ArticleDO> query = Wrappers.query(ArticleDO.builder().category(category).build());
         Page<ArticleDO> page = new Page<>(pageNo, pageSize);
-        IPage<ArticleDO> articlePage = articleMapper.selectPage(page, queryWrapper);
+        IPage<ArticleDO> articlePage = articleMapper.selectPage(page, query);
         return articlePage.convert(ArticleService::apply);
     }
 
