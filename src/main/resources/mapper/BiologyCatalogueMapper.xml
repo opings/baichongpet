@@ -135,7 +135,7 @@
         LEFT JOIN label_relation lr ON bc.biology_catalogue_id = lr.target_id
         AND lr.target_type = 'ENCYCLOPEDIAS_TAG'
         <where>
-            <if test="category != null">
+            <if test="category != null and category.trim().length() != 0 ">
                 and bc.category = #{category, jdbcType=VARCHAR}
             </if>
             <if test="labelList != null and labelList.size > 0">
