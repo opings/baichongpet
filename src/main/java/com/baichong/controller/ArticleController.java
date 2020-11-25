@@ -93,7 +93,7 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/addHeat")
+    @GetMapping(value = "/heatTop10")
     @ApiOperation(value = "文章热度Top10")
     public SimpleResult<List<ArticleModel>> heatTop10() {
         List<ArticleModel> articleModelList = articleService.heatTop10();
@@ -101,7 +101,7 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/addHeat")
+    @GetMapping(value = "/categoryHeatTop1")
     @ApiOperation(value = "文章分类热度Top1")
     public SimpleResult<List<ArticleModel>> categoryHeatTop1() {
         List<ArticleModel> articleModelList = articleService.categoryHeatTop1();
