@@ -145,6 +145,7 @@
                 </foreach>
             </if>
         </where>
+        GROUP BY bc.biology_catalogue_id
         LIMIT #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
     </select>
 
