@@ -3,6 +3,7 @@ package com.baichong.dao.mapper;
 import com.baichong.dao.entity.ArticleDO;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * @author zhaoyongzhen
@@ -11,4 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
+    @Update(value = " update article set heat = heat +1 where id = #{id,jdbcType=BIGINT};")
+    void addHeat(Long id);
 }

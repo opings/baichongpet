@@ -6,6 +6,7 @@ import com.baichong.dao.mapper.ArticleMapper;
 import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.ArticleModel;
 import com.baichong.model.LabelModel;
+import com.baichong.model.enums.ArticleCategoryEnum;
 import com.baichong.model.enums.LabelTargetTypeEnum;
 import com.baichong.service.helper.ArticleHelper;
 import com.baichong.util.DateUtils;
@@ -15,7 +16,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -42,13 +42,6 @@ public class ArticleService {
     @Autowired
     private LabelService labelService;
 
-
-    private static ArticleModel apply(ArticleDO article) {
-        ArticleModel v = new ArticleModel();
-        BeanUtils.copyProperties(article, v);
-        return v;
-
-    }
 
     public void create(String title,
                        String content,
@@ -111,4 +104,29 @@ public class ArticleService {
         return articleHelper.buildArticleModel(articleMapper.selectOne(queryWrapper));
     }
 
+    public void addHeat(Long id) {
+        articleMapper.addHeat(id);
+    }
+
+    public List<ArticleModel> heatTop10() {
+        QueryWrapper<ArticleDO> query = new QueryWrapper<>();
+        query.orderByDesc("heat");
+        Page<ArticleDO> page = new Page<>(1, 10);
+        IPage<ArticleDO> articlePage = articleMapper.selectPage(page, query);
+        return articlePage.getRecords().stream().map(articleDO -> articleHelper.buildArticleModel(articleDO)).collect(Collectors.toList());
+    }
+
+    public List<ArticleModel> categoryHeatTop1() {
+        QueryWrapper<ArticleDO> query = new QueryWrapper<>();
+        query.in("category", ArticleCategoryEnum.BAI_CHONG_JIAN_KANG, ArticleCategoryEnum.BAI_CHONG_RE_DIAN
+                , ArticleCategoryEnum.CHONG_WU_YIN_SHI, ArticleCategoryEnum.YANG_CHONG_CHANG_SHI);
+        query.orderByDesc("heat", "create_dt");
+        query.groupBy("category");
+        List<ArticleDO> articleDOS = articleMapper.selectList(query);
+        List<ArticleModel> list = new ArrayList<>();
+        for (ArticleDO articleDO : articleDOS) {
+            list.add(articleHelper.buildArticleModel(articleDO));
+        }
+        return list;
+    }
 }

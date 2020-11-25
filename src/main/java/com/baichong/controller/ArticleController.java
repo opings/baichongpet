@@ -84,4 +84,29 @@ public class ArticleController {
         return SimpleResult.success(result);
     }
 
+    @ResponseBody
+    @GetMapping(value = "/addHeat")
+    @ApiOperation(value = "文章增加热度")
+    public SimpleResult<String> addHeat(Long id) {
+        articleService.addHeat(id);
+        return SimpleResult.success(ConstantUtils.Y);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/addHeat")
+    @ApiOperation(value = "文章热度Top10")
+    public SimpleResult<List<ArticleModel>> heatTop10() {
+        List<ArticleModel> articleModelList = articleService.heatTop10();
+        return SimpleResult.success(articleModelList);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/addHeat")
+    @ApiOperation(value = "文章分类热度Top1")
+    public SimpleResult<List<ArticleModel>> categoryHeatTop1() {
+        List<ArticleModel> articleModelList = articleService.categoryHeatTop1();
+        return SimpleResult.success(articleModelList);
+    }
+
+
 }

@@ -38,6 +38,7 @@ public class ArticleHelper {
         articleModel.setIllustratingPicture(SplitterUtils.toList(articleDO.getIllustratingPicture()));
         articleModel.setPublishDate(articleDO.getPublishDate());
         articleModel.setLastUpdateDate(articleDO.getArticleId());
+        articleModel.setHeat(articleDO.getHeat());
         {
             List<LabelModel> labelList = labelService.listLabelByTargetTypeAndId(
                     LabelTargetTypeEnum.ARTICLE_TAG,

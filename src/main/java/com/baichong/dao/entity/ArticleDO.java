@@ -71,6 +71,8 @@ public class ArticleDO {
      */
     private String illustratingPicture;
 
+    private Integer heat;
+
     private Date createDt;
 
     private Date updateDt;

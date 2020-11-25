@@ -67,4 +67,6 @@ public class ArticleModel {
      */
     private List<String> illustratingPicture;
 
+    private Integer heat;
+
 }
