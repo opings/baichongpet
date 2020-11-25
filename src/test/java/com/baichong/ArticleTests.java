@@ -49,7 +49,7 @@ public class ArticleTests {
     @Test
     public void excelBatchLoadData() {
 
-        String fileName = "C:\\Users\\zhaoyongzhen\\Desktop\\zixun.xls";
+        String fileName = "C:\\work\\workspace\\github\\baichongpet\\zixun.xls";
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet 文件流会自动关闭
         EasyExcel.read(fileName, ArticleExcelData.class, new ArticleDataListener(articleService)).sheet().doRead();
 
