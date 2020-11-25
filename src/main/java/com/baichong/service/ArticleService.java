@@ -23,6 +23,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author zhaoyongzhen
@@ -91,15 +92,16 @@ public class ArticleService {
         Page<ArticleDO> page = new Page<>(pageNo, pageSize);
         IPage<ArticleDO> articlePage = articleMapper.selectPage(page, query);
         IPage<ArticleModel> modelIPage = new Page<>(pageNo, pageSize);
-        List<ArticleModel> articleModelList = new ArrayList<>();
-        for (ArticleDO articleDO : articlePage.getRecords()) {
-            articleModelList.add(articleHelper.buildArticleModel(articleDO));
-        }
+        List<ArticleModel> articleModelList = articlePage.getRecords().stream().map(articleDO -> articleHelper.buildArticleModel(articleDO)).collect(Collectors.toList());
+        setModelPage(articlePage, modelIPage, articleModelList);
+        return modelIPage;
+    }
+
+    private void setModelPage(IPage<ArticleDO> articlePage, IPage<ArticleModel> modelIPage, List<ArticleModel> articleModelList) {
         modelIPage.setRecords(articleModelList);
         modelIPage.setPages(articlePage.getPages());
         modelIPage.setTotal(articlePage.getTotal());
         modelIPage.setCurrent(articlePage.getCurrent());
-        return modelIPage;
     }
 
 
