@@ -1,10 +1,8 @@
 package com.baichong.service;
 
 import com.baichong.dao.entity.ArticleDO;
-import com.baichong.dao.entity.LabelDO;
 import com.baichong.dao.entity.LabelRelationDO;
 import com.baichong.dao.mapper.ArticleMapper;
-import com.baichong.dao.mapper.LabelMapper;
 import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.ArticleModel;
 import com.baichong.model.LabelModel;
@@ -22,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -91,7 +90,16 @@ public class ArticleService {
         QueryWrapper<ArticleDO> query = Wrappers.query(ArticleDO.builder().category(category).build());
         Page<ArticleDO> page = new Page<>(pageNo, pageSize);
         IPage<ArticleDO> articlePage = articleMapper.selectPage(page, query);
-        return articlePage.convert(ArticleService::apply);
+        IPage<ArticleModel> modelIPage = new Page<>(pageNo, pageSize);
+        List<ArticleModel> articleModelList = new ArrayList<>();
+        for (ArticleDO articleDO : articlePage.getRecords()) {
+            articleModelList.add(articleHelper.buildArticleModel(articleDO));
+        }
+        modelIPage.setRecords(articleModelList);
+        modelIPage.setPages(articlePage.getPages());
+        modelIPage.setTotal(articlePage.getTotal());
+        modelIPage.setCurrent(articlePage.getCurrent());
+        return modelIPage;
     }
 
 

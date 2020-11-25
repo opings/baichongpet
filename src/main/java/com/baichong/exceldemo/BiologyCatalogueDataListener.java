@@ -3,7 +3,6 @@ package com.baichong.exceldemo;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.baichong.controller.request.biologycatalogue.CreateBiologyCatalogueRequest;
-import com.baichong.service.ArticleService;
 import com.baichong.service.BiologyCatalogueService;
 import lombok.extern.slf4j.Slf4j;
 
