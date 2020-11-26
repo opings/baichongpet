@@ -87,8 +87,8 @@ public class ArticleController {
     @ResponseBody
     @GetMapping(value = "/addHeat")
     @ApiOperation(value = "文章增加热度")
-    public SimpleResult<String> addHeat(Long id) {
-        articleService.addHeat(id);
+    public SimpleResult<String> addHeat(String articleId) {
+        articleService.addHeat(articleId);
         return SimpleResult.success(ConstantUtils.Y);
     }
 

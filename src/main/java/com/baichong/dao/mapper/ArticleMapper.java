@@ -12,6 +12,6 @@ import org.apache.ibatis.annotations.Update;
 @Mapper
 public interface ArticleMapper extends BaseMapper<ArticleDO> {
 
-    @Update(value = " update article set heat = heat +1 where id = #{id,jdbcType=BIGINT};")
-    void addHeat(Long id);
+    @Update(value = " update article set heat = heat +1 where article_id = #{articleId,jdbcType=VARCHAR};")
+    void addHeat(String articleId);
 }

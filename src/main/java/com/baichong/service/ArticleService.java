@@ -20,7 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -104,8 +103,8 @@ public class ArticleService {
         return articleHelper.buildArticleModel(articleMapper.selectOne(queryWrapper));
     }
 
-    public void addHeat(Long id) {
-        articleMapper.addHeat(id);
+    public void addHeat(String articleId) {
+        articleMapper.addHeat(articleId);
     }
 
     public List<ArticleModel> heatTop10() {
@@ -123,10 +122,6 @@ public class ArticleService {
         query.orderByDesc("heat", "create_dt");
         query.groupBy("category");
         List<ArticleDO> articleDOS = articleMapper.selectList(query);
-        List<ArticleModel> list = new ArrayList<>();
-        for (ArticleDO articleDO : articleDOS) {
-            list.add(articleHelper.buildArticleModel(articleDO));
-        }
-        return list;
+        return articleDOS.stream().map(articleDO -> articleHelper.buildArticleModel(articleDO)).collect(Collectors.toList());
     }
 }
