@@ -124,4 +124,21 @@ public class ArticleService {
         List<ArticleDO> articleDOS = articleMapper.selectList(query);
         return articleDOS.stream().map(articleDO -> articleHelper.buildArticleModel(articleDO)).collect(Collectors.toList());
     }
+
+
+    public List<ArticleModel> listArticleByLabelList(Long labelId, Integer startIndex, Integer pageSize) {
+        return labelRelationMapper.listByLabelId(LabelTargetTypeEnum.ARTICLE_TAG.getCode(),
+                labelId,
+                startIndex,
+                pageSize)
+                .stream()
+                .map(item -> {
+                    QueryWrapper<ArticleDO> queryWrapper = new QueryWrapper<>();
+                    queryWrapper.eq("article_Id", item.getTargetId());
+                    return articleHelper.buildArticleModel(articleMapper.selectOne(queryWrapper));
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
 }

@@ -3,6 +3,7 @@ package com.baichong.controller;
 import com.baichong.controller.request.article.CreateArticleRequest;
 import com.baichong.controller.request.article.QueryArticleRequest;
 import com.baichong.controller.response.SimpleResult;
+import com.baichong.controller.response.article.ListArticleDTO;
 import com.baichong.model.ArticleModel;
 import com.baichong.model.enums.ArticleCategoryEnum;
 import com.baichong.service.ArticleService;
@@ -53,12 +54,27 @@ public class ArticleController {
 
     @ResponseBody
     @GetMapping(value = "/listArticle")
-    @ApiOperation(value = "文章列表")
+    @ApiOperation(value = "根据类型查文章列表")
     public SimpleResult<IPage<ArticleModel>> listArticle(QueryArticleRequest request) {
         IPage<ArticleModel> articleModels = articleService.listByCategory(request.getCategory(),
                 request.getPageNo(),
                 request.getPageSize());
         return SimpleResult.success(articleModels);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/listArticleByLabelList")
+    @ApiOperation(value = "根据标签查文章列表")
+    public SimpleResult<ListArticleDTO> listArticleByLabelList(QueryArticleRequest request) {
+        List<ArticleModel> articleModels = articleService.listArticleByLabelList(request.getLabelId(),
+                request.getStartIndex(),
+                request.getPageSize());
+
+        ListArticleDTO listArticleDTO = new ListArticleDTO();
+        listArticleDTO.setArticleModelList(articleModels);
+        listArticleDTO.setCursorPage(request.getPageNo() + 1);
+
+        return SimpleResult.success(listArticleDTO);
     }
 
     @ResponseBody

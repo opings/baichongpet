@@ -1,21 +1,24 @@
 package com.baichong;
 
 import com.alibaba.excel.EasyExcel;
-import com.baichong.exceldemo.ArticleExcelData;
+import com.baichong.controller.ArticleController;
+import com.baichong.controller.request.article.QueryArticleRequest;
+import com.baichong.controller.response.SimpleResult;
+import com.baichong.controller.response.article.ListArticleDTO;
 import com.baichong.exceldemo.ArticleDataListener;
+import com.baichong.exceldemo.ArticleExcelData;
 import com.baichong.model.ArticleModel;
 import com.baichong.model.enums.ArticleCategoryEnum;
 import com.baichong.service.ArticleService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,6 +26,9 @@ public class ArticleTests {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private ArticleController articleController;
 
     @Test
     public void createTest() {
@@ -37,13 +43,25 @@ public class ArticleTests {
     }
 
     @Test
-    public void listByCategoryTest () throws JsonProcessingException {
+    public void listByCategoryTest() throws JsonProcessingException {
         IPage<ArticleModel> result = articleService.listByCategory(
                 ArticleCategoryEnum.BAI_CHONG_RE_DIAN.getCode(),
                 0,
                 10);
-        ObjectMapper mapper=new ObjectMapper();
-        System.out.println( mapper.writeValueAsString(result));
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println(mapper.writeValueAsString(result));
+    }
+
+    @Test
+    public void listArticleByLabelListTest() throws JsonProcessingException {
+
+        QueryArticleRequest queryArticleRequest = new QueryArticleRequest();
+        queryArticleRequest.setLabelId(1L);
+        queryArticleRequest.setPageNo(1);
+        queryArticleRequest.setPageSize(10);
+        SimpleResult<ListArticleDTO> result = articleController.listArticleByLabelList(queryArticleRequest);
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println(mapper.writeValueAsString(result));
     }
 
     @Test
