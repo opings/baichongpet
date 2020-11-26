@@ -12,11 +12,11 @@ public class BasePageRequest extends BaseRequest {
     /**
      * 页码
      */
-    private Integer pageNo;
+    private Integer pageNo = 1;
     /**
      * 每页数量
      */
-    private Integer pageSize;
+    private Integer pageSize = 20;
 
 
     public Integer getStartIndex() {
