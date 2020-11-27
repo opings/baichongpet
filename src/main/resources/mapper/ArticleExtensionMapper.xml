@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baichong.dao.mapper.ArticleExtensionMapper">
+    <resultMap id="BaseResultMap" type="com.baichong.dao.entity.ArticleExtensionDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="article_id" jdbcType="VARCHAR" property="articleId"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="create_dt" jdbcType="TIMESTAMP" property="createDt"/>
+        <result column="update_dt" jdbcType="TIMESTAMP" property="updateDt"/>
+    </resultMap>
+
+    <sql id="BASE_TABLE">
+        article_extension
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        id,
+        article_id,
+        content,
+        create_dt,
+        update_dt
+    </sql>
+    <insert id="insert" parameterType="com.baichong.dao.entity.ArticleExtensionDO">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        (article_id,
+        content
+        )
+        values
+        (#{articleId,jdbcType=VARCHAR},
+        #{content,jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="selectByArticleId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        WHERE article_id = #{articleId,jdbcType=VARCHAR}
+    </select>
+
+
+
+
+</mapper>

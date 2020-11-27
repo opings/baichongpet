@@ -1,7 +1,9 @@
 package com.baichong.service;
 
 import com.baichong.dao.entity.ArticleDO;
+import com.baichong.dao.entity.ArticleExtensionDO;
 import com.baichong.dao.entity.LabelRelationDO;
+import com.baichong.dao.mapper.ArticleExtensionMapper;
 import com.baichong.dao.mapper.ArticleMapper;
 import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.ArticleModel;
@@ -40,7 +42,8 @@ public class ArticleService {
     private LabelRelationMapper labelRelationMapper;
     @Autowired
     private LabelService labelService;
-
+    @Autowired
+    private ArticleExtensionMapper articleExtensionMapper;
 
     public void create(String title,
                        String content,
@@ -53,7 +56,6 @@ public class ArticleService {
             ArticleDO articleDO = new ArticleDO();
             articleDO.setArticleId(IDUtils.getId());
             articleDO.setTitle(title);
-            articleDO.setContent(content);
             articleDO.setAuthor(author);
             articleDO.setCategory(category);
             articleDO.setSurfacePlot(surfacePlot);
@@ -61,6 +63,11 @@ public class ArticleService {
             articleDO.setPublishDate(DateUtils.nowDate());
             articleDO.setLastUpdateDate(DateUtils.nowDate());
             articleMapper.insert(articleDO);
+
+            ArticleExtensionDO articleExtensionDO = new ArticleExtensionDO();
+            articleExtensionDO.setArticleId(articleDO.getArticleId());
+            articleExtensionDO.setContent(content);
+            articleExtensionMapper.insert(articleExtensionDO);
 
             List<String> labelIdList = SplitterUtils.toList(labelIds);
             for (String labelIdStr : labelIdList) {
@@ -84,7 +91,10 @@ public class ArticleService {
         Page<ArticleDO> page = new Page<>(pageNo, pageSize);
         IPage<ArticleDO> articlePage = articleMapper.selectPage(page, query);
         IPage<ArticleModel> modelIPage = new Page<>(pageNo, pageSize);
-        List<ArticleModel> articleModelList = articlePage.getRecords().stream().map(articleDO -> articleHelper.buildArticleModel(articleDO)).collect(Collectors.toList());
+        List<ArticleModel> articleModelList = articlePage.getRecords()
+                .stream()
+                .map(articleDO -> articleHelper.buildArticleModel(articleDO, false))
+                .collect(Collectors.toList());
         setModelPage(articlePage, modelIPage, articleModelList);
         return modelIPage;
     }
@@ -100,7 +110,7 @@ public class ArticleService {
     public ArticleModel selectByArticleId(String articleId) {
         QueryWrapper<ArticleDO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("article_Id", articleId);
-        return articleHelper.buildArticleModel(articleMapper.selectOne(queryWrapper));
+        return articleHelper.buildArticleModel(articleMapper.selectOne(queryWrapper), true);
     }
 
     public void addHeat(String articleId) {
@@ -112,7 +122,10 @@ public class ArticleService {
         query.orderByDesc("heat");
         Page<ArticleDO> page = new Page<>(1, 10);
         IPage<ArticleDO> articlePage = articleMapper.selectPage(page, query);
-        return articlePage.getRecords().stream().map(articleDO -> articleHelper.buildArticleModel(articleDO)).collect(Collectors.toList());
+        return articlePage.getRecords()
+                .stream()
+                .map(articleDO -> articleHelper.buildArticleModel(articleDO, false))
+                .collect(Collectors.toList());
     }
 
     public List<ArticleModel> categoryHeatTop1() {
@@ -122,7 +135,10 @@ public class ArticleService {
         query.orderByDesc("heat", "create_dt");
         query.groupBy("category");
         List<ArticleDO> articleDOS = articleMapper.selectList(query);
-        return articleDOS.stream().map(articleDO -> articleHelper.buildArticleModel(articleDO)).collect(Collectors.toList());
+        return articleDOS
+                .stream()
+                .map(articleDO -> articleHelper.buildArticleModel(articleDO, false))
+                .collect(Collectors.toList());
     }
 
 
@@ -135,7 +151,7 @@ public class ArticleService {
                 .map(item -> {
                     QueryWrapper<ArticleDO> queryWrapper = new QueryWrapper<>();
                     queryWrapper.eq("article_Id", item.getTargetId());
-                    return articleHelper.buildArticleModel(articleMapper.selectOne(queryWrapper));
+                    return articleHelper.buildArticleModel(articleMapper.selectOne(queryWrapper), false);
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());

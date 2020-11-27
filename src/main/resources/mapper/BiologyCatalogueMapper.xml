@@ -7,25 +7,7 @@
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
         <result column="img" jdbcType="VARCHAR" property="img"/>
-        <result column="content" jdbcType="VARCHAR" property="content"/>
         <result column="category" jdbcType="VARCHAR" property="category"/>
-        <result column="chinese_name" jdbcType="VARCHAR" property="chineseName"/>
-        <result column="alias" jdbcType="VARCHAR" property="alias"/>
-        <result column="kingdom" jdbcType="VARCHAR" property="kingdom"/>
-        <result column="phylum" jdbcType="VARCHAR" property="phylum"/>
-        <result column="sub_phylum" jdbcType="VARCHAR" property="subPhylum"/>
-        <result column="biology_class" jdbcType="VARCHAR" property="biologyClass"/>
-        <result column="biology_sub_class" jdbcType="VARCHAR" property="biologySubClass"/>
-        <result column="orders" jdbcType="VARCHAR" property="orders"/>
-        <result column="sub_order" jdbcType="VARCHAR" property="subOrder"/>
-        <result column="family" jdbcType="VARCHAR" property="family"/>
-        <result column="sub_family" jdbcType="VARCHAR" property="subFamily"/>
-        <result column="race" jdbcType="VARCHAR" property="race"/>
-        <result column="sub_race" jdbcType="VARCHAR" property="subRace"/>
-        <result column="genus" jdbcType="VARCHAR" property="genus"/>
-        <result column="sub_genus" jdbcType="VARCHAR" property="subGenus"/>
-        <result column="species" jdbcType="VARCHAR" property="species"/>
-        <result column="sub_species" jdbcType="VARCHAR" property="subSpecies"/>
         <result column="create_dt" jdbcType="TIMESTAMP" property="createDt"/>
         <result column="update_dt" jdbcType="TIMESTAMP" property="updateDt"/>
     </resultMap>
@@ -40,25 +22,7 @@
         title,
         introduction,
         img,
-        content,
         category,
-        chinese_name,
-        alias,
-        kingdom,
-        phylum,
-        sub_phylum,
-        biology_class,
-        biology_sub_class,
-        orders,
-        sub_order,
-        family,
-        sub_family,
-        race,
-        sub_race,
-        genus,
-        sub_genus,
-        species,
-        sub_species,
         create_dt,
         update_dt
     </sql>
@@ -71,25 +35,7 @@
         title,
         introduction,
         img,
-        content,
-        category,
-        chinese_name,
-        alias,
-        kingdom,
-        phylum,
-        sub_phylum,
-        biology_class,
-        biology_sub_class,
-        orders,
-        sub_order,
-        family,
-        sub_family,
-        race,
-        sub_race,
-        genus,
-        sub_genus,
-        species,
-        sub_species
+        category
         )
         values
         (
@@ -97,25 +43,7 @@
         #{title,                jdbcType=VARCHAR},
         #{introduction,         jdbcType=VARCHAR},
         #{img,                  jdbcType=VARCHAR},
-        #{content,              jdbcType=VARCHAR},
-        #{category,             jdbcType=VARCHAR},
-        #{chineseName,          jdbcType=VARCHAR},
-        #{alias,                jdbcType=VARCHAR},
-        #{kingdom,              jdbcType=VARCHAR},
-        #{phylum,               jdbcType=VARCHAR},
-        #{subPhylum,            jdbcType=VARCHAR},
-        #{biologyClass,         jdbcType=VARCHAR},
-        #{biologySubClass,      jdbcType=VARCHAR},
-        #{orders,               jdbcType=VARCHAR},
-        #{subOrder,             jdbcType=VARCHAR},
-        #{family,               jdbcType=VARCHAR},
-        #{subFamily,            jdbcType=VARCHAR},
-        #{race,                 jdbcType=VARCHAR},
-        #{subRace,              jdbcType=VARCHAR},
-        #{genus,                jdbcType=VARCHAR},
-        #{subGenus,             jdbcType=VARCHAR},
-        #{species,              jdbcType=VARCHAR},
-        #{subSpecies,           jdbcType=VARCHAR}
+        #{category,             jdbcType=VARCHAR}
         )
     </insert>
 

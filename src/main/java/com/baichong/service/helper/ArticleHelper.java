@@ -1,6 +1,8 @@
 package com.baichong.service.helper;
 
 import com.baichong.dao.entity.ArticleDO;
+import com.baichong.dao.entity.ArticleExtensionDO;
+import com.baichong.dao.mapper.ArticleExtensionMapper;
 import com.baichong.dao.mapper.LabelMapper;
 import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.ArticleModel;
@@ -23,15 +25,17 @@ import java.util.stream.Collectors;
 public class ArticleHelper {
     @Autowired
     private LabelService labelService;
+    @Autowired
+    private ArticleExtensionMapper articleExtensionMapper;
 
-    public ArticleModel buildArticleModel(ArticleDO articleDO) {
+    public ArticleModel buildArticleModel(ArticleDO articleDO, Boolean fillExtension) {
         if (Objects.isNull(articleDO)) {
             return null;
         }
         ArticleModel articleModel = new ArticleModel();
         articleModel.setArticleId(articleDO.getArticleId());
         articleModel.setTitle(articleDO.getTitle());
-        articleModel.setContent(articleDO.getContent());
+
         articleModel.setAuthor(articleDO.getAuthor());
         articleModel.setCategory(articleDO.getCategory());
         articleModel.setSurfacePlot(articleDO.getSurfacePlot());
@@ -39,6 +43,14 @@ public class ArticleHelper {
         articleModel.setPublishDate(articleDO.getPublishDate());
         articleModel.setLastUpdateDate(articleDO.getArticleId());
         articleModel.setHeat(articleDO.getHeat());
+
+        {
+            if (fillExtension) {
+                ArticleExtensionDO articleExtensionDO = articleExtensionMapper.selectByArticleId(articleDO.getArticleId());
+                articleModel.setContent(articleExtensionDO.getContent());
+            }
+        }
+
         {
             List<LabelModel> labelList = labelService.listLabelByTargetTypeAndId(
                     LabelTargetTypeEnum.ARTICLE_TAG,
