@@ -53,7 +53,7 @@ public class BiologyCatalogueController {
     @ResponseBody
     @PostMapping(value = "/listBiologyCatalogueInfo")
     @ApiOperation(value = "生物名录列表")
-    public SimpleResult<List<BiologyCatalogueModel>> listBiologyCatalogueInfo(ListQueryBiologyCatalogueRequest request) {
+    public SimpleResult<List<BiologyCatalogueModel>> listBiologyCatalogueInfo(@RequestBody ListQueryBiologyCatalogueRequest request) {
         List<BiologyCatalogueModel> biologyCatalogueModels = biologyCatalogueService.listBiologyCatalogue(
                 request.getCategory(),
                 request.getLabelIds(),

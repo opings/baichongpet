@@ -55,7 +55,7 @@ public class ArticleController {
     @ResponseBody
     @PostMapping(value = "/listArticle")
     @ApiOperation(value = "根据类型查文章列表")
-    public SimpleResult<IPage<ArticleModel>> listArticle(QueryArticleRequest request) {
+    public SimpleResult<IPage<ArticleModel>> listArticle(@RequestBody QueryArticleRequest request) {
         IPage<ArticleModel> articleModels = articleService.listByCategory(request.getCategory(),
                 request.getPageNo(),
                 request.getPageSize());
@@ -65,7 +65,7 @@ public class ArticleController {
     @ResponseBody
     @PostMapping(value = "/listArticleByLabelList")
     @ApiOperation(value = "根据标签查文章列表")
-    public SimpleResult<ListArticleDTO> listArticleByLabelList(QueryArticleRequest request) {
+    public SimpleResult<ListArticleDTO> listArticleByLabelList(@RequestBody QueryArticleRequest request) {
         List<ArticleModel> articleModels = articleService.listArticleByLabelList(request.getLabelId(),
                 request.getStartIndex(),
                 request.getPageSize());
