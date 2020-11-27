@@ -42,6 +42,7 @@ public class ArticleController {
             @ApiParam(value = "Created article object", required = true)
                     CreateArticleRequest request) {
         articleService.create(request.getTitle(),
+                request.getIntroduction(),
                 request.getContent(),
                 request.getAuthor(),
                 request.getCategory(),

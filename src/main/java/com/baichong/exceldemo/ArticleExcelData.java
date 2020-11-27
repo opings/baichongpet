@@ -11,4 +11,5 @@ public class ArticleExcelData {
     private String string5;
     private String string6;
     private String string7;
+    private String string8;
 }

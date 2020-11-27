@@ -26,6 +26,11 @@ public class ArticleModel {
     private String title;
 
     /**
+     * 简介
+     */
+    private String introduction;
+
+    /**
      * 内容
      */
     private String content;

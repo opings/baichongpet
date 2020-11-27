@@ -23,6 +23,12 @@ public class CreateArticleRequest implements Serializable {
     private String title;
 
     /**
+     * 简介
+     */
+    @ApiModelProperty(value = "简介", required = true)
+    private String introduction;
+
+    /**
      * 内容
      */
     @ApiModelProperty(value = "内容", required = true)

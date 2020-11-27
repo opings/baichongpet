@@ -2,6 +2,7 @@ CREATE TABLE `article` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `article_id` varchar(32) NOT NULL COMMENT '文章id',
   `title` varchar(32) NOT NULL COMMENT '标题',
+  `introduction` varchar(2048) NOT NULL COMMENT '简介',
   `author` varchar(32) NOT NULL COMMENT '作者',
   `publish_date` datetime NOT NULL COMMENT '发布时间',
   `last_update_date` datetime NOT NULL COMMENT '最后修改时间',

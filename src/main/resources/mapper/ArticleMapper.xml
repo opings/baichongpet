@@ -5,6 +5,7 @@
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="article_id" jdbcType="VARCHAR" property="articleId"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="introduction" jdbcType="VARCHAR" property="introduction"/>
         <result column="author" jdbcType="VARCHAR" property="author"/>
         <result column="publish_date" jdbcType="TIMESTAMP" property="publishDate"/>
         <result column="last_update_date" jdbcType="TIMESTAMP" property="lastUpdateDate"/>
@@ -23,6 +24,7 @@
         id,
         article_id,
         title,
+        introduction,
         author,
         publish_date,
         last_update_date,

@@ -35,6 +35,11 @@ public class ArticleDO {
     private String title;
 
     /**
+     * 简介
+     */
+    private String introduction;
+
+    /**
      * 作者
      */
     private String author;

@@ -46,6 +46,7 @@ public class ArticleService {
     private ArticleExtensionMapper articleExtensionMapper;
 
     public void create(String title,
+                       String introduction,
                        String content,
                        String author,
                        String category,
@@ -56,6 +57,7 @@ public class ArticleService {
             ArticleDO articleDO = new ArticleDO();
             articleDO.setArticleId(IDUtils.getId());
             articleDO.setTitle(title);
+            articleDO.setIntroduction(introduction);
             articleDO.setAuthor(author);
             articleDO.setCategory(category);
             articleDO.setSurfacePlot(surfacePlot);

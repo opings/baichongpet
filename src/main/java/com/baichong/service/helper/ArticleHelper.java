@@ -35,7 +35,7 @@ public class ArticleHelper {
         ArticleModel articleModel = new ArticleModel();
         articleModel.setArticleId(articleDO.getArticleId());
         articleModel.setTitle(articleDO.getTitle());
-
+        articleModel.setIntroduction(articleDO.getIntroduction());
         articleModel.setAuthor(articleDO.getAuthor());
         articleModel.setCategory(articleDO.getCategory());
         articleModel.setSurfacePlot(articleDO.getSurfacePlot());

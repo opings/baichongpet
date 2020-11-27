@@ -49,7 +49,8 @@ public class ArticleDataListener extends AnalysisEventListener<ArticleExcelData>
                 data.getString4(),
                 data.getString5(),
                 data.getString6(),
-                data.getString7()
+                data.getString7(),
+                data.getString8()
                 );
 
 
