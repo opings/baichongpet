@@ -2,7 +2,6 @@ CREATE TABLE `article` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
   `article_id` varchar(32) NOT NULL COMMENT '文章id',
   `title` varchar(32) NOT NULL COMMENT '标题',
-  `content` varchar(4096) NOT NULL COMMENT '内容',
   `author` varchar(32) NOT NULL COMMENT '作者',
   `publish_date` datetime NOT NULL COMMENT '发布时间',
   `last_update_date` datetime NOT NULL COMMENT '最后修改时间',
@@ -12,6 +11,16 @@ CREATE TABLE `article` (
   PRIMARY KEY (`id`),
   KEY `idx_article_id` (`article_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
+
+CREATE TABLE `article_extension` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `article_id` varchar(32) NOT NULL COMMENT '文章id',
+  `content` text NOT NULL COMMENT '内容',
+  `create_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_article_id` (`article_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章扩展表';
 
 
 CREATE TABLE `label` (
@@ -43,6 +52,17 @@ CREATE TABLE `biology_catalogue` (
   `img` varchar(512) DEFAULT NULL COMMENT '图片',
   `content` varchar(2048) NOT NULL COMMENT '正文',
   `category` varchar(32) NOT NULL COMMENT '分类',
+  `create_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_biology_catalogue_id` (`biology_catalogue_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='生物名录表';
+
+
+CREATE TABLE `biology_catalogue_extension` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增ID',
+  `biology_catalogue_id` varchar(64) NOT NULL COMMENT 'id',
+  `content` text NOT NULL COMMENT '正文',
   `chinese_name` varchar(32) NOT NULL COMMENT '中文名',
   `alias` varchar(32) DEFAULT NULL COMMENT '别名',
   `kingdom` varchar(32) DEFAULT NULL COMMENT '界',
@@ -63,5 +83,5 @@ CREATE TABLE `biology_catalogue` (
   `create_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_dt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idx_biology_catalogue_id` (`biology_catalogue_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='生物名录表';
+  KEY `idx_article_id` (`biology_catalogue_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='生物名录扩展表';
