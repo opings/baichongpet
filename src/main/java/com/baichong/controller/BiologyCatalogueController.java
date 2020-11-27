@@ -1,6 +1,7 @@
 package com.baichong.controller;
 
-import com.baichong.controller.request.biologycatalogue.*;
+import com.baichong.controller.request.biologycatalogue.CreateBiologyCatalogueRequest;
+import com.baichong.controller.request.biologycatalogue.ListQueryBiologyCatalogueRequest;
 import com.baichong.controller.response.SimpleResult;
 import com.baichong.model.BiologyCatalogueModel;
 import com.baichong.model.LabelModel;
@@ -32,7 +33,7 @@ public class BiologyCatalogueController {
     private BiologyCatalogueService biologyCatalogueService;
 
     @ResponseBody
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping(value = "/create")
     @ApiOperation(value = "创建生物名录")
     public SimpleResult<String> createBiologyCatalogue(@RequestBody CreateBiologyCatalogueRequest request) {
         biologyCatalogueService.create(request);
@@ -41,16 +42,16 @@ public class BiologyCatalogueController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/selectBiologyCatalogueInfo", method = RequestMethod.GET)
+    @GetMapping(value = "/selectBiologyCatalogueInfo/{biologyCatalogueId}")
     @ApiOperation(value = "生物名录详情")
-    public SimpleResult<BiologyCatalogueModel> selectBiologyCatalogueInfo(QueryBiologyCatalogueRequest request) {
+    public SimpleResult<BiologyCatalogueModel> selectBiologyCatalogueInfo(@PathVariable String biologyCatalogueId) {
         BiologyCatalogueModel biologyCatalogueModel =
-                biologyCatalogueService.selectByBiologyCatalogueId(request.getBiologyCatalogueId());
+                biologyCatalogueService.selectByBiologyCatalogueId(biologyCatalogueId);
         return SimpleResult.success(biologyCatalogueModel);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/listBiologyCatalogueInfo", method = RequestMethod.GET)
+    @PostMapping(value = "/listBiologyCatalogueInfo")
     @ApiOperation(value = "生物名录列表")
     public SimpleResult<List<BiologyCatalogueModel>> listBiologyCatalogueInfo(ListQueryBiologyCatalogueRequest request) {
         List<BiologyCatalogueModel> biologyCatalogueModels = biologyCatalogueService.listBiologyCatalogue(
@@ -63,7 +64,7 @@ public class BiologyCatalogueController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/listCategory", method = RequestMethod.GET)
+    @GetMapping(value = "/listCategory")
     @ApiOperation(value = "生物名录分类列表")
     public SimpleResult<List<Map<String, String>>> listCategory() {
         List<Map<String, String>> result = Lists.newArrayList();
@@ -77,19 +78,19 @@ public class BiologyCatalogueController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/createCategoryLabel", method = RequestMethod.GET)
+    @GetMapping(value = "/createCategoryLabel/{category}/{labelName}")
     @ApiOperation(value = "创建名录分类标签")
-    public SimpleResult<LabelModel> createCategoryLabel(CreateBiologyCatalogueCategoryLabelRequest request) {
-        LabelModel labelModel = biologyCatalogueService.createCategoryLabel(request.getCategory(), request.getLabelName());
+    public SimpleResult<LabelModel> createCategoryLabel(@PathVariable String category, @PathVariable String labelName) {
+        LabelModel labelModel = biologyCatalogueService.createCategoryLabel(category, labelName);
         return SimpleResult.success(labelModel);
     }
 
 
     @ResponseBody
-    @RequestMapping(value = "/listCategoryLabel", method = RequestMethod.GET)
+    @GetMapping(value = "/listCategoryLabel/{category}")
     @ApiOperation(value = "名录分类标签列表")
-    public SimpleResult<List<LabelModel>> listCategoryLabel(QueryBiologyCatalogueCategoryLabelRequest request) {
-        List<LabelModel> result = biologyCatalogueService.listCategoryLabel(request.getCategory());
+    public SimpleResult<List<LabelModel>> listCategoryLabel(@PathVariable String category) {
+        List<LabelModel> result = biologyCatalogueService.listCategoryLabel(category);
         return SimpleResult.success(result);
     }
 

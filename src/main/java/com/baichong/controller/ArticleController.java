@@ -53,7 +53,7 @@ public class ArticleController {
 
 
     @ResponseBody
-    @GetMapping(value = "/listArticle")
+    @PostMapping(value = "/listArticle")
     @ApiOperation(value = "根据类型查文章列表")
     public SimpleResult<IPage<ArticleModel>> listArticle(QueryArticleRequest request) {
         IPage<ArticleModel> articleModels = articleService.listByCategory(request.getCategory(),
@@ -63,7 +63,7 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/listArticleByLabelList")
+    @PostMapping(value = "/listArticleByLabelList")
     @ApiOperation(value = "根据标签查文章列表")
     public SimpleResult<ListArticleDTO> listArticleByLabelList(QueryArticleRequest request) {
         List<ArticleModel> articleModels = articleService.listArticleByLabelList(request.getLabelId(),
@@ -78,10 +78,10 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/selectArticleInfo")
+    @GetMapping(value = "/selectArticleInfo/{articleId}")
     @ApiOperation(value = "文章详情")
-    public SimpleResult<ArticleModel> selectArticleInfo(QueryArticleRequest request) {
-        ArticleModel articleModel = articleService.selectByArticleId(request.getArticleId());
+    public SimpleResult<ArticleModel> selectArticleInfo(@PathVariable String articleId) {
+        ArticleModel articleModel = articleService.selectByArticleId(articleId);
         return SimpleResult.success(articleModel);
     }
 
@@ -101,9 +101,9 @@ public class ArticleController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/addHeat")
+    @GetMapping(value = "/addHeat/{articleId}")
     @ApiOperation(value = "文章增加热度")
-    public SimpleResult<String> addHeat(String articleId) {
+    public SimpleResult<String> addHeat(@PathVariable String articleId) {
         articleService.addHeat(articleId);
         return SimpleResult.success(ConstantUtils.Y);
     }

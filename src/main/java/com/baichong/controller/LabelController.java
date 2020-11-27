@@ -29,7 +29,7 @@ public class LabelController {
     private LabelService labelService;
 
     @ResponseBody
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping(value = "/create")
     @ApiOperation(value = "创建标签")
     public SimpleResult<String> createArticle(
             @RequestBody
@@ -41,11 +41,11 @@ public class LabelController {
 
 
     @ResponseBody
-    @RequestMapping(value = "/listLabel", method = RequestMethod.GET)
+    @GetMapping(value = "/listLabel")
     @ApiOperation(value = "标签列表")
     public SimpleResult<List<LabelModel>> listArticle(QueryLabelRequest request) {
-        List<LabelModel> LabelModel = labelService.listLabel(request.getStartIndex(), request.getPageSize());
-        return SimpleResult.success(LabelModel);
+        List<LabelModel> labelModels = labelService.listLabel(request.getStartIndex(), request.getPageSize());
+        return SimpleResult.success(labelModels);
     }
 
 }
