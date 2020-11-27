@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baichong.dao.mapper.BiologyCatalogueExtensionMapper">
+    <resultMap id="BaseResultMap" type="com.baichong.dao.entity.BiologyCatalogueExtensionDO">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="biology_catalogue_id" jdbcType="VARCHAR" property="BiologyCatalogueId"/>
+        <result column="content" jdbcType="VARCHAR" property="content"/>
+        <result column="chinese_name" jdbcType="VARCHAR" property="chineseName"/>
+        <result column="alias" jdbcType="VARCHAR" property="alias"/>
+        <result column="kingdom" jdbcType="VARCHAR" property="kingdom"/>
+        <result column="phylum" jdbcType="VARCHAR" property="phylum"/>
+        <result column="sub_phylum" jdbcType="VARCHAR" property="subPhylum"/>
+        <result column="biology_class" jdbcType="VARCHAR" property="biologyClass"/>
+        <result column="biology_sub_class" jdbcType="VARCHAR" property="biologySubClass"/>
+        <result column="orders" jdbcType="VARCHAR" property="orders"/>
+        <result column="sub_order" jdbcType="VARCHAR" property="subOrder"/>
+        <result column="family" jdbcType="VARCHAR" property="family"/>
+        <result column="sub_family" jdbcType="VARCHAR" property="subFamily"/>
+        <result column="race" jdbcType="VARCHAR" property="race"/>
+        <result column="sub_race" jdbcType="VARCHAR" property="subRace"/>
+        <result column="genus" jdbcType="VARCHAR" property="genus"/>
+        <result column="sub_genus" jdbcType="VARCHAR" property="subGenus"/>
+        <result column="species" jdbcType="VARCHAR" property="species"/>
+        <result column="sub_species" jdbcType="VARCHAR" property="subSpecies"/>
+        <result column="create_dt" jdbcType="TIMESTAMP" property="createDt"/>
+        <result column="update_dt" jdbcType="TIMESTAMP" property="updateDt"/>
+    </resultMap>
+
+    <sql id="BASE_TABLE">
+        biology_catalogue_extension
+    </sql>
+
+    <sql id="BASE_COLUMN">
+        id,
+        biology_catalogue_id,
+        content,
+        chinese_name,
+        alias,
+        kingdom,
+        phylum,
+        sub_phylum,
+        biology_class,
+        biology_sub_class,
+        orders,
+        sub_order,
+        family,
+        sub_family,
+        race,
+        sub_race,
+        genus,
+        sub_genus,
+        species,
+        sub_species,
+        create_dt,
+        update_dt
+    </sql>
+
+    <insert id="insert" parameterType="com.baichong.dao.entity.BiologyCatalogueExtensionDO">
+        INSERT INTO
+        <include refid="BASE_TABLE"/>
+        (
+        biology_catalogue_id,
+        content,
+        chinese_name,
+        alias,
+        kingdom,
+        phylum,
+        sub_phylum,
+        biology_class,
+        biology_sub_class,
+        orders,
+        sub_order,
+        family,
+        sub_family,
+        race,
+        sub_race,
+        genus,
+        sub_genus,
+        species,
+        sub_species
+        )
+        values
+        (
+        #{biologyCatalogueId,   jdbcType=VARCHAR},
+        #{content,              jdbcType=VARCHAR},
+        #{chineseName,          jdbcType=VARCHAR},
+        #{alias,                jdbcType=VARCHAR},
+        #{kingdom,              jdbcType=VARCHAR},
+        #{phylum,               jdbcType=VARCHAR},
+        #{subPhylum,            jdbcType=VARCHAR},
+        #{biologyClass,         jdbcType=VARCHAR},
+        #{biologySubClass,      jdbcType=VARCHAR},
+        #{orders,               jdbcType=VARCHAR},
+        #{subOrder,             jdbcType=VARCHAR},
+        #{family,               jdbcType=VARCHAR},
+        #{subFamily,            jdbcType=VARCHAR},
+        #{race,                 jdbcType=VARCHAR},
+        #{subRace,              jdbcType=VARCHAR},
+        #{genus,                jdbcType=VARCHAR},
+        #{subGenus,             jdbcType=VARCHAR},
+        #{species,              jdbcType=VARCHAR},
+        #{subSpecies,           jdbcType=VARCHAR}
+        )
+    </insert>
+
+    <select id="selectByBiologyCatalogueId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BASE_COLUMN"/>
+        FROM
+        <include refid="BASE_TABLE"/>
+        WHERE biology_catalogue_id = #{biologyCatalogueId,jdbcType=VARCHAR}
+    </select>
+
+
+</mapper>

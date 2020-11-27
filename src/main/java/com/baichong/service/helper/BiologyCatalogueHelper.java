@@ -1,6 +1,8 @@
 package com.baichong.service.helper;
 
 import com.baichong.dao.entity.BiologyCatalogueDO;
+import com.baichong.dao.entity.BiologyCatalogueExtensionDO;
+import com.baichong.dao.mapper.BiologyCatalogueExtensionMapper;
 import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.BiologyCatalogueModel;
 import com.baichong.model.LabelModel;
@@ -22,9 +24,17 @@ public class BiologyCatalogueHelper {
 
     @Autowired
     private LabelService labelService;
+    @Autowired
+    private BiologyCatalogueExtensionMapper biologyCatalogueExtensionMapper;
 
 
-    public BiologyCatalogueModel buildBiologyCatalogueModel(BiologyCatalogueDO biologyCatalogueDO) {
+    /**
+     *
+     * @param biologyCatalogueDO
+     * @param fillExtension     是否填充扩展信息  true：填充 ； false:不填充
+     * @return
+     */
+    public BiologyCatalogueModel buildBiologyCatalogueModel(BiologyCatalogueDO biologyCatalogueDO, Boolean fillExtension) {
         if (Objects.isNull(biologyCatalogueDO)) {
             return null;
         }
@@ -33,27 +43,34 @@ public class BiologyCatalogueHelper {
         biologyCatalogueModel.setTitle(biologyCatalogueDO.getTitle());
         biologyCatalogueModel.setIntroduction(biologyCatalogueDO.getIntroduction());
         biologyCatalogueModel.setImg(biologyCatalogueDO.getImg());
-        biologyCatalogueModel.setContent(biologyCatalogueDO.getContent());
         biologyCatalogueModel.setCategory(biologyCatalogueDO.getCategory());
         biologyCatalogueModel.setUpdateDt(biologyCatalogueDO.getUpdateDt());
 
-        biologyCatalogueModel.setChineseName(biologyCatalogueDO.getChineseName());
-        biologyCatalogueModel.setAlias(biologyCatalogueDO.getAlias());
-        biologyCatalogueModel.setKingdom(biologyCatalogueDO.getKingdom());
-        biologyCatalogueModel.setPhylum(biologyCatalogueDO.getPhylum());
-        biologyCatalogueModel.setSubPhylum(biologyCatalogueDO.getSubPhylum());
-        biologyCatalogueModel.setBiologyClass(biologyCatalogueDO.getBiologyClass());
-        biologyCatalogueModel.setBiologySubClass(biologyCatalogueDO.getBiologySubClass());
-        biologyCatalogueModel.setOrder(biologyCatalogueDO.getOrders());
-        biologyCatalogueModel.setSubOrder(biologyCatalogueDO.getSubOrder());
-        biologyCatalogueModel.setFamily(biologyCatalogueDO.getFamily());
-        biologyCatalogueModel.setSubFamily(biologyCatalogueDO.getSubFamily());
-        biologyCatalogueModel.setRace(biologyCatalogueDO.getRace());
-        biologyCatalogueModel.setSubRace(biologyCatalogueDO.getSubRace());
-        biologyCatalogueModel.setGenus(biologyCatalogueDO.getGenus());
-        biologyCatalogueModel.setSubGenus(biologyCatalogueDO.getSubGenus());
-        biologyCatalogueModel.setSpecies(biologyCatalogueDO.getSpecies());
-        biologyCatalogueModel.setSubSpecies(biologyCatalogueDO.getSubSpecies());
+        {
+            if (fillExtension) {
+                BiologyCatalogueExtensionDO biologyCatalogueExtensionDO =
+                        biologyCatalogueExtensionMapper.selectByBiologyCatalogueId(biologyCatalogueDO.getBiologyCatalogueId());
+                biologyCatalogueModel.setContent(biologyCatalogueExtensionDO.getContent());
+                biologyCatalogueModel.setChineseName(biologyCatalogueExtensionDO.getChineseName());
+                biologyCatalogueModel.setAlias(biologyCatalogueExtensionDO.getAlias());
+                biologyCatalogueModel.setKingdom(biologyCatalogueExtensionDO.getKingdom());
+                biologyCatalogueModel.setPhylum(biologyCatalogueExtensionDO.getPhylum());
+                biologyCatalogueModel.setSubPhylum(biologyCatalogueExtensionDO.getSubPhylum());
+                biologyCatalogueModel.setBiologyClass(biologyCatalogueExtensionDO.getBiologyClass());
+                biologyCatalogueModel.setBiologySubClass(biologyCatalogueExtensionDO.getBiologySubClass());
+                biologyCatalogueModel.setOrder(biologyCatalogueExtensionDO.getOrders());
+                biologyCatalogueModel.setSubOrder(biologyCatalogueExtensionDO.getSubOrder());
+                biologyCatalogueModel.setFamily(biologyCatalogueExtensionDO.getFamily());
+                biologyCatalogueModel.setSubFamily(biologyCatalogueExtensionDO.getSubFamily());
+                biologyCatalogueModel.setRace(biologyCatalogueExtensionDO.getRace());
+                biologyCatalogueModel.setSubRace(biologyCatalogueExtensionDO.getSubRace());
+                biologyCatalogueModel.setGenus(biologyCatalogueExtensionDO.getGenus());
+                biologyCatalogueModel.setSubGenus(biologyCatalogueExtensionDO.getSubGenus());
+                biologyCatalogueModel.setSpecies(biologyCatalogueExtensionDO.getSpecies());
+                biologyCatalogueModel.setSubSpecies(biologyCatalogueExtensionDO.getSubSpecies());
+            }
+        }
+
 
         {
             List<LabelModel> labelList = labelService.listLabelByTargetTypeAndId(

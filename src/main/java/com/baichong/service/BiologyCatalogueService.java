@@ -2,10 +2,10 @@ package com.baichong.service;
 
 import com.baichong.controller.request.biologycatalogue.CreateBiologyCatalogueRequest;
 import com.baichong.dao.entity.BiologyCatalogueDO;
-import com.baichong.dao.entity.LabelDO;
+import com.baichong.dao.entity.BiologyCatalogueExtensionDO;
 import com.baichong.dao.entity.LabelRelationDO;
+import com.baichong.dao.mapper.BiologyCatalogueExtensionMapper;
 import com.baichong.dao.mapper.BiologyCatalogueMapper;
-import com.baichong.dao.mapper.LabelMapper;
 import com.baichong.dao.mapper.LabelRelationMapper;
 import com.baichong.model.BiologyCatalogueModel;
 import com.baichong.model.LabelModel;
@@ -15,6 +15,7 @@ import com.baichong.util.IDUtils;
 import com.baichong.util.SplitterUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.List;
 import java.util.Objects;
@@ -35,53 +36,66 @@ public class BiologyCatalogueService {
     private LabelRelationMapper labelRelationMapper;
     @Autowired
     private LabelService labelService;
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+    @Autowired
+    private BiologyCatalogueExtensionMapper biologyCatalogueExtensionMapper;
 
     public void create(CreateBiologyCatalogueRequest request) {
-        BiologyCatalogueDO biologyCatalogueDO = new BiologyCatalogueDO();
-        biologyCatalogueDO.setBiologyCatalogueId(IDUtils.getId());
-        biologyCatalogueDO.setTitle(request.getTitle());
-        biologyCatalogueDO.setIntroduction(request.getIntroduction());
-        biologyCatalogueDO.setImg(request.getImg());
-        biologyCatalogueDO.setContent(request.getContent());
-        biologyCatalogueDO.setCategory(request.getCategory());
-        biologyCatalogueDO.setChineseName(request.getChineseName());
-        biologyCatalogueDO.setAlias(request.getAlias());
-        biologyCatalogueDO.setKingdom(request.getKingdom());
-        biologyCatalogueDO.setPhylum(request.getPhylum());
-        biologyCatalogueDO.setSubPhylum(request.getSubPhylum());
-        biologyCatalogueDO.setBiologyClass(request.getBiologyClass());
-        biologyCatalogueDO.setBiologySubClass(request.getBiologySubClass());
-        biologyCatalogueDO.setOrders(request.getOrder());
-        biologyCatalogueDO.setSubOrder(request.getSubOrder());
-        biologyCatalogueDO.setFamily(request.getFamily());
-        biologyCatalogueDO.setSubFamily(request.getSubFamily());
-        biologyCatalogueDO.setRace(request.getRace());
-        biologyCatalogueDO.setSubRace(request.getSubRace());
-        biologyCatalogueDO.setGenus(request.getGenus());
-        biologyCatalogueDO.setSubGenus(request.getSubGenus());
-        biologyCatalogueDO.setSpecies(request.getSpecies());
-        biologyCatalogueDO.setSubSpecies(request.getSubSpecies());
-        biologyCatalogueMapper.insert(biologyCatalogueDO);
 
-        List<String> labelIdList = SplitterUtils.toList(request.getLabelIds());
-        for (String labelIdStr : labelIdList) {
-            LabelModel labelModel = labelService.selectById(Long.parseLong(labelIdStr));
-            if (Objects.isNull(labelModel)) {
-                continue;
-            }
-            LabelRelationDO labelRelationDO = new LabelRelationDO();
-            labelRelationDO.setTargetType(LabelTargetTypeEnum.ENCYCLOPEDIAS_TAG.getCode());
-            labelRelationDO.setTargetId(biologyCatalogueDO.getBiologyCatalogueId());
-            labelRelationDO.setLabelId(Long.parseLong(labelIdStr));
-            labelRelationMapper.insert(labelRelationDO);
-        }
+        transactionTemplate.execute(status -> {
+                    BiologyCatalogueDO biologyCatalogueDO = new BiologyCatalogueDO();
+                    biologyCatalogueDO.setBiologyCatalogueId(IDUtils.getId());
+                    biologyCatalogueDO.setTitle(request.getTitle());
+                    biologyCatalogueDO.setIntroduction(request.getIntroduction());
+                    biologyCatalogueDO.setImg(request.getImg());
+                    biologyCatalogueDO.setCategory(request.getCategory());
+                    biologyCatalogueMapper.insert(biologyCatalogueDO);
 
+                    BiologyCatalogueExtensionDO biologyCatalogueExtensionDO = new BiologyCatalogueExtensionDO();
+                    biologyCatalogueExtensionDO.setBiologyCatalogueId(biologyCatalogueDO.getBiologyCatalogueId());
+                    biologyCatalogueExtensionDO.setContent(request.getContent());
+                    biologyCatalogueExtensionDO.setChineseName(request.getChineseName());
+                    biologyCatalogueExtensionDO.setAlias(request.getAlias());
+                    biologyCatalogueExtensionDO.setKingdom(request.getKingdom());
+                    biologyCatalogueExtensionDO.setPhylum(request.getPhylum());
+                    biologyCatalogueExtensionDO.setSubPhylum(request.getSubPhylum());
+                    biologyCatalogueExtensionDO.setBiologyClass(request.getBiologyClass());
+                    biologyCatalogueExtensionDO.setBiologySubClass(request.getBiologySubClass());
+                    biologyCatalogueExtensionDO.setOrders(request.getOrder());
+                    biologyCatalogueExtensionDO.setSubOrder(request.getSubOrder());
+                    biologyCatalogueExtensionDO.setFamily(request.getFamily());
+                    biologyCatalogueExtensionDO.setSubFamily(request.getSubFamily());
+                    biologyCatalogueExtensionDO.setRace(request.getRace());
+                    biologyCatalogueExtensionDO.setSubRace(request.getSubRace());
+                    biologyCatalogueExtensionDO.setGenus(request.getGenus());
+                    biologyCatalogueExtensionDO.setSubGenus(request.getSubGenus());
+                    biologyCatalogueExtensionDO.setSpecies(request.getSpecies());
+                    biologyCatalogueExtensionDO.setSubSpecies(request.getSubSpecies());
+                    biologyCatalogueExtensionMapper.insert(biologyCatalogueExtensionDO);
+
+                    List<String> labelIdList = SplitterUtils.toList(request.getLabelIds());
+                    for (String labelIdStr : labelIdList) {
+                        LabelModel labelModel = labelService.selectById(Long.parseLong(labelIdStr));
+                        if (Objects.isNull(labelModel)) {
+                            continue;
+                        }
+                        LabelRelationDO labelRelationDO = new LabelRelationDO();
+                        labelRelationDO.setTargetType(LabelTargetTypeEnum.ENCYCLOPEDIAS_TAG.getCode());
+                        labelRelationDO.setTargetId(biologyCatalogueDO.getBiologyCatalogueId());
+                        labelRelationDO.setLabelId(Long.parseLong(labelIdStr));
+                        labelRelationMapper.insert(labelRelationDO);
+                    }
+
+                    return true;
+                }
+        );
     }
 
 
     public BiologyCatalogueModel selectByBiologyCatalogueId(String biologyCatalogueId) {
         return biologyCatalogueHelper.buildBiologyCatalogueModel(
-                biologyCatalogueMapper.selectByBiologyCatalogueId(biologyCatalogueId)
+                biologyCatalogueMapper.selectByBiologyCatalogueId(biologyCatalogueId), true
         );
     }
 
@@ -89,7 +103,7 @@ public class BiologyCatalogueService {
         List<String> labelIdList = SplitterUtils.toList(labelIds);
         return biologyCatalogueMapper.listBiologyCatalogue(category, labelIdList, startIndex, pageSize)
                 .stream()
-                .map(item -> biologyCatalogueHelper.buildBiologyCatalogueModel(item))
+                .map(item -> biologyCatalogueHelper.buildBiologyCatalogueModel(item, false))
                 .collect(Collectors.toList());
     }
 
