@@ -39,12 +39,12 @@ public enum ArticleCategoryEnum {
     /**
      * 宠物训练
      */
-    CHONG_WU_XUN_LIAN("CHONG_WU_XUN_LIAN", "宠物训练"),
+    CHONG_WU_XUN_LIAN("CHONG_WU_XUN_LIAN", "宠物训练");
 
     /**
      * 佰宠故事
      */
-    BAI_CHONG_GU_SHI("BAI_CHONG_GU_SHI", "佰宠故事"),;
+//    BAI_CHONG_GU_SHI("BAI_CHONG_GU_SHI", "佰宠故事");
 
     @Getter
     private String code;
