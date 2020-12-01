@@ -57,7 +57,7 @@
 
     <select id="listBiologyCatalogue" resultMap="BaseResultMap">
         SELECT
-          bc.*
+        bc.*
         FROM
         biology_catalogue bc
         LEFT JOIN label_relation lr ON bc.biology_catalogue_id = lr.target_id
@@ -74,6 +74,7 @@
             </if>
         </where>
         GROUP BY bc.biology_catalogue_id
+        ORDER BY bc.create_dt DESC
         LIMIT #{startIndex,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
     </select>
 
