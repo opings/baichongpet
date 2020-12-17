@@ -90,7 +90,7 @@ public class ArticleService {
 
     public IPage<ArticleModel> listByCategory(String category, Integer pageNo, Integer pageSize) {
         QueryWrapper<ArticleDO> query = Wrappers.query(ArticleDO.builder().category(category).build());
-        query.orderByDesc("update_dt");
+        query.orderByDesc("publish_date");
         Page<ArticleDO> page = new Page<>(pageNo, pageSize);
         IPage<ArticleDO> articlePage = articleMapper.selectPage(page, query);
         IPage<ArticleModel> modelIPage = new Page<>(pageNo, pageSize);
