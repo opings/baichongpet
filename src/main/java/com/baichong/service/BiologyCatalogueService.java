@@ -1,5 +1,6 @@
 package com.baichong.service;
 
+import com.alibaba.fastjson.JSON;
 import com.baichong.controller.request.biologycatalogue.CreateBiologyCatalogueRequest;
 import com.baichong.dao.entity.BiologyCatalogueDO;
 import com.baichong.dao.entity.BiologyCatalogueExtensionDO;
@@ -7,17 +8,22 @@ import com.baichong.dao.entity.LabelRelationDO;
 import com.baichong.dao.mapper.BiologyCatalogueExtensionMapper;
 import com.baichong.dao.mapper.BiologyCatalogueMapper;
 import com.baichong.dao.mapper.LabelRelationMapper;
+import com.baichong.model.AnimalViewModel;
+import com.baichong.model.ApiViewModel;
 import com.baichong.model.BiologyCatalogueModel;
 import com.baichong.model.LabelModel;
 import com.baichong.model.enums.LabelTargetTypeEnum;
 import com.baichong.service.helper.BiologyCatalogueHelper;
 import com.baichong.util.IDUtils;
 import com.baichong.util.SplitterUtils;
+import com.github.kevinsawicki.http.HttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -132,4 +138,18 @@ public class BiologyCatalogueService {
                 .collect(Collectors.toList());
     }
 
+    public Boolean getApiView(String page, String type) {
+        Map data = new HashMap();
+        data.put("key", "3215896b5afe88cd1858dadda0615651");
+        data.put("page", page);
+        data.put("num", "15");
+        data.put("type", type);
+        String resp = HttpRequest.post("http://api.tianapi.com/txapi/pet/index").form(data).body();
+
+        ApiViewModel apiViewModel = JSON.parseObject(resp, ApiViewModel.class);
+        for (AnimalViewModel animalViewModel : apiViewModel.getNewslist()) {
+            System.out.println(animalViewModel.getDesc());
+        }
+        return Boolean.TRUE;
+    }
 }
