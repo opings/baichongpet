@@ -12,19 +12,18 @@ import com.baichong.model.AnimalViewModel;
 import com.baichong.model.ApiViewModel;
 import com.baichong.model.BiologyCatalogueModel;
 import com.baichong.model.LabelModel;
+import com.baichong.model.enums.EncyclopediasCategoryEnum;
 import com.baichong.model.enums.LabelTargetTypeEnum;
 import com.baichong.service.helper.BiologyCatalogueHelper;
 import com.baichong.util.IDUtils;
 import com.baichong.util.SplitterUtils;
 import com.github.kevinsawicki.http.HttpRequest;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -148,8 +147,61 @@ public class BiologyCatalogueService {
 
         ApiViewModel apiViewModel = JSON.parseObject(resp, ApiViewModel.class);
         for (AnimalViewModel animalViewModel : apiViewModel.getNewslist()) {
-            System.out.println(animalViewModel.getDesc());
+            BiologyCatalogueDO biologyCatalogueDO = new BiologyCatalogueDO();
+            biologyCatalogueDO.setBiologyCatalogueId(IDUtils.getId());
+            biologyCatalogueDO.setTitle(animalViewModel.getName());
+            biologyCatalogueDO.setIntroduction(animalViewModel.getDesc().length() >= 200 ? animalViewModel.getDesc().substring(0, 200) : animalViewModel.getDesc());
+            biologyCatalogueDO.setImg(animalViewModel.getUrl());
+            biologyCatalogueDO.setCategory(EncyclopediasCategoryEnum.ANIMAL.getCode());
+            biologyCatalogueMapper.insert(biologyCatalogueDO);
+            /**
+             * animalViewModel.getFeature()  体态特征
+             * animalViewModel.getDesc()     描述
+             * animalViewModel.getCharacterFeature() 特点
+             * animalViewModel.getCareKnowledge()   照顾须知
+             * animalViewModel.getFeedPoints()    喂养注意
+             */
+
+            BiologyCatalogueExtensionDO biologyCatalogueExtensionDO = new BiologyCatalogueExtensionDO();
+            biologyCatalogueExtensionDO.setBiologyCatalogueId(biologyCatalogueDO.getBiologyCatalogueId());
+            biologyCatalogueExtensionDO.setContent(animalViewModel.getFeature());
+            biologyCatalogueExtensionDO.setChineseName(animalViewModel.getName());
+
+            biologyCatalogueExtensionDO.setFamily(AnimalEnum.getByCode(type).getDesc());
+
+            biologyCatalogueExtensionMapper.insert(biologyCatalogueExtensionDO);
+
         }
         return Boolean.TRUE;
+    }
+
+    public enum AnimalEnum {
+        /**
+         * 0 猫 3页
+         * 1 狗 10页
+         * 2 爬行类 44页
+         * 3 小宠物 18页
+         * 4 水族类 17页
+         */
+        CAT("0", "猫科"),
+        DOG("1","犬科"),
+        REPTILES("2","爬行类"),
+        SMALL_PET("3","小宠物"),
+        AQUARIUM("4","水族类");
+        @Getter
+        private String code;
+
+        @Getter
+        private String desc;
+
+        AnimalEnum(String code, String desc) {
+            this.code = code;
+            this.desc = desc;
+        }
+
+        public static AnimalEnum getByCode(String code) {
+            return Arrays.stream(AnimalEnum.values()).filter(item ->
+                    item.getCode().equalsIgnoreCase(code)).findFirst().orElse(null);
+        }
     }
 }
