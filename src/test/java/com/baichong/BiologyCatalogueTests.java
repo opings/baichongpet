@@ -2,8 +2,8 @@ package com.baichong;
 
 import com.alibaba.excel.EasyExcel;
 import com.baichong.controller.request.biologycatalogue.CreateBiologyCatalogueRequest;
-import com.baichong.exceldemo.BiologyCatalogueDataListener;
-import com.baichong.exceldemo.BiologyCatalogueExcelData;
+import com.baichong.demo.excel.BiologyCatalogueDataListener;
+import com.baichong.demo.excel.BiologyCatalogueExcelData;
 import com.baichong.model.BiologyCatalogueModel;
 import com.baichong.service.BiologyCatalogueService;
 import com.fasterxml.jackson.core.JsonProcessingException;
